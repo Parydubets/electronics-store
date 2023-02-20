@@ -1,0 +1,263 @@
+html{
+    background: #F8F8F8;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    font-size: 18pt;
+    font-weight: bold;
+}
+
+h1{
+    font-size: 24pt;
+    margin: 1.5%;
+}
+
+a{
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    text-decoration: none;
+    color: #3D3E3E;
+    font-size: 24px;
+}
+
+.main_block{
+    min-height: 600px;
+    margin: 4%;
+    margin-top: 1%;
+    border-color: #818989;
+    border-style: solid;
+    border-radius: 30px;
+    border-width: 2px;
+    display: flex;
+    flex-direction: column;
+}
+
+/*All nnavigation styles*/
+.menu{
+    display: flex;
+    justify-content: space-between;
+}
+
+.left-side{
+    min-width: 47%;
+    max-width: 50%;
+    margin: 0.5%;
+    display: flex;
+}
+
+.right-side{
+    min-width: 47%;
+    max-width: 50%;
+    margin: 0.5%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* --Buttons-- */
+/* General and menu styles*/
+.btn{
+    width: 0;
+    min-height: 50px;
+    min-width: 22%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 0.8%;
+    padding: 1.5% 3% 1.5% 3%;
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 1px;
+}
+
+.active-menu-btn{
+    color: white;
+    background: #D7D3E6;
+    border-color: #3D3E3E;
+}
+
+.menu-btn{
+    border-color: #3D3E3E;
+    transition: all .5s ease-in-out;
+}
+
+.menu-btn:hover{
+    background-color: #D7D3E6;
+}
+
+.new-btn{
+    position: relative;
+    transition: .4s ease-in;
+    z-index: 1;
+    background: #FFE6CC;
+    border-color: #D79B00;
+}
+
+.refresh-btn{
+    min-height: 20px;
+    max-height: 10%;
+    min-width: 10%;
+    display: inline-flex;
+    padding: 0.5%;
+    margin-right: 1.5%;
+    transition: all .5s ease-in-out;
+}
+
+.refresh-btn:hover{
+    color: #f3f0f0;
+    background-color: #14083b;
+}
+
+/*-------*/
+/* Form submit buttons*/
+input[type="submit" i].save{
+    background: #FFE6CC;
+    border-color: #D79B00;
+}
+
+input[type="submit" i].cancel{
+    background: #F8F8F8;
+    border-color: #D79B00;
+}
+
+/*-------*/
+/* Filter by field*/
+.row{
+    border-width: 2px 0 2px 0;
+    border-color: #3D3E3E;
+    border-style: solid;
+}
+
+.filter{
+    margin: 0.5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+form{
+    min-width: 60%;
+    margin: 1.5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+input{
+    min-height: 25px;
+    border-radius: 7px;
+    border-color: #a7a7a9;
+}
+
+#filter_by{
+    margin-right: 5%;
+}
+
+/*-------*/
+/* Table frame */
+.list{
+    margin: 0.5%;
+}
+
+.align-column{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+/* Table settings*/
+.table {
+    table-layout: fixed;
+    font-size: 22px;
+    width: 100%;
+}
+
+table{ font-style: normal; }
+.column-id { width: 3%; }
+.column-f-name { width: 13%; }
+.column-l-name { width: 13%; }
+.column-email { width: 25%; }
+.column-phone { width: 15%; }
+.column-orders { width: 9%; }
+.column-registration { width: 15%; }
+.column-client-id{ width:5%; }
+.column-date{ width: 11%; }
+.column-cost{ width: 5%; }
+.column-name{ width: 25%; }
+.column-price{ width: 10%; }
+.column-category{ width: 15%; }
+.column-year{ width: 10%; }
+.column-amount{ width: 15%; }
+.column-edit { width: 7%; }
+.table td {
+    border-bottom: #3D3E3E;
+}
+.table th {
+    background: white;
+    color: black;
+}
+.table td,
+.table th {
+    border-collapse: collapse;
+    text-align: left;
+    padding: 5px 10px;
+    word-break: break-all;
+}
+
+.table tr:nth-child(even) {
+  background: white;
+}
+
+.edit-row i{
+    font-size: 28px;
+    padding: 5%;
+}
+
+/*-------*/
+/* Add and edit pages main frame */
+.center{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: solid #3D3E3E;
+    border-width: 2px 0 0 0;
+    font-weight: normal;
+}
+.edit-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input[type="submit" i] {
+    min-width: 130px;
+    min-height: 50px;
+    font-weight: bold;
+    font-size: 18px;
+    background-color: #f3f0f0;
+    color: #3D3E3E;
+    border-width: 1px;
+    border-radius: 10px;
+    margin-top: 2%;
+}
+
+.block{
+    display: flex;
+    flex-direction: column;
+    padding: 2%;
+    min-width: 40%;
+}
+
+.edit{
+    min-width: 60%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#registration{
+    min-width: 100%;
+}
+
+#price-amount{
+    display: flex;
+    max-width: 50%;
+}
