@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Management</title>
+    <link type= "text/css" href= "style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/3f636a5948.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <h1 id="Management">Management page</h1>
+    <div class="main_block">
+
+        <div class="menu">
+            <div class="left-side">
+                <a class="btn menu-btn" href="clients.html">Clients</a>
+                <a class="btn menu-btn" href="orders.html">Orders</a>
+                <a class="btn active-menu-btn" href="products.html">Products</a>
+            </div>
+
+        </div >
+            <div class="center">
+                <form class="edit-form">
+                        <div class="block">
+                            <label for="fname"> Name </label>
+                            <input type="text" name="fname" value="Smartphone BM3">
+                        </div>
+                        <div class="block">
+                            <label for="category"> Category</label>
+                            <input type="text" name="category" value="Phones">
+                        </div>
+                        <div class="block">
+                            <label for="year"> Year</label>
+                            <input type="number" name="year" value="2023">
+                        </div>
+                        <div id="price-amount">
+                            <div class="block">
+                                <label for="price"> Price</label>
+                                <input type="number" class="number-input" name="price" value="240">
+                            </div>
+                            <div class="block">
+                                <label for="amount"> Amount</label>
+                                <input type="number" class="number-input" name="amount" value="31">
+                            </div>
+                        </div>
+                        <div class="edit">
+                            <input class="cancel" type="submit" name="action" value="Cancel">
+                            <input class="save" type="submit" name="action" value="Save">
+                        </div>
+            </form>
+        </div>
+
+
+</body>
+</html>
