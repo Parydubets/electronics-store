@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Management</title>
+    <link type= "text/css" href= "../static/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/3f636a5948.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <h1 id="Management">Management page</h1>
+    <div class="main_block">
+
+        <div class="menu">
+            <div class="left-side">
+                <a class="btn   {% if page=="clients" %} active-menu-btn"
+                                {% else %} menu-btn"
+                                {% endif %}
+                href="{{ url_for(clients) }}">Clients</a>
+                <a class="btn   {% if page=="orders" %} active-menu-btn"
+                                {% else %} menu-btn"
+                                {% endif %} href="url_for(orders)">Orders</a>
+                <a class="btn {% if page=="products" %} active-menu-btn"
+                                {% else %} menu-btn"
+                                {% endif %} href="url_for(products)">Products</a>
+            </div>
+
+            <div class="right-side">
+                {% if type!="new" %}
+                    <a class="btn new-btn" href="new_client.html">New</a>
+                {% endif %}
+            </div>
+
+        </div>
+{% block content %}
+{% endblock %}
+
+</html>
