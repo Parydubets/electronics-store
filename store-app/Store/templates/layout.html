@@ -14,21 +14,21 @@
 
         <div class="menu">
             <div class="left-side">
-                <a class="btn   {% if page=="clients" %} active-menu-btn"
+                <a class="btn   {% if page=="client" %} active-menu-btn"
                                 {% else %} menu-btn"
                                 {% endif %}
-                href="{{ url_for(clients) }}">Clients</a>
-                <a class="btn   {% if page=="orders" %} active-menu-btn"
+                href="{{ url_for('clients') }}">Clients</a>
+                <a class="btn   {% if page=="order" %} active-menu-btn"
                                 {% else %} menu-btn"
-                                {% endif %} href="url_for(orders)">Orders</a>
-                <a class="btn {% if page=="products" %} active-menu-btn"
+                                {% endif %} href="{{ url_for('orders') }}">Orders</a>
+                <a class="btn {% if page=="product" %} active-menu-btn"
                                 {% else %} menu-btn"
-                                {% endif %} href="url_for(products)">Products</a>
+                                {% endif %} href="{{ url_for('products') }}">Products</a>
             </div>
 
             <div class="right-side">
                 {% if type!="new" %}
-                    <a class="btn new-btn" href="new_client.html">New</a>
+                    <a class="btn new-btn" href="new_{{ page }}">New</a>
                 {% endif %}
             </div>
 

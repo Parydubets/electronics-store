@@ -1,25 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Management</title>
-    <link type= "text/css" href= "style.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://kit.fontawesome.com/3f636a5948.js" crossorigin="anonymous"></script>
-</head>
-
-<body>
-    <h1 id="Management">Management page</h1>
-    <div class="main_block">
-
-        <div class="menu">
-            <div class="left-side">
-                <a class="btn menu-btn" href="clients.html">Clients</a>
-                <a class="btn menu-btn" href="orders.html">Orders</a>
-                <a class="btn active-menu-btn" href="products.html">Products</a>
-            </div>
-
-        </div >
+{% extends "layout.html" %}
+{% block content %}
             <div class="center">
                 <form class="edit-form">
                         <div class="block">
@@ -53,4 +33,4 @@
 
 
 </body>
-</html>
+{% endblock %}
