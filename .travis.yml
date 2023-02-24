@@ -7,7 +7,7 @@ install:
   - cd store_app 
   - pip install .
   - pip install coveralls
-  - coverage run --source=mypkg -m pytest tests/
+  - coverage run --source=store -m pytest
 script:
   - pytest
 after:
