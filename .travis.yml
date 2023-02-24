@@ -4,7 +4,7 @@ python:
     - 3.9
 
 install: 
-  - pip install -r store_app/setup.py
+  - pip install -r requirements.txt
   
 script:
   - flask run
