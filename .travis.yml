@@ -6,9 +6,12 @@ python:
 install: 
   - cd store_app 
   - pip install .
-  
+  - pip install coveralls
+  - coverage run --source=mypkg -m pytest tests/
 script:
   - pytest
+after:
+  - covrealls
 
 service_name: travis-pro
 repo_token: New7B0MZdsYf5vo72SIvfsJqTC4gY4U0B
