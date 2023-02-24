@@ -3,5 +3,5 @@ language: python
 python:
     - 3.9
 
-script:
-    - flask run
+install: 
+  -pip install -r requirements/dev.txt
