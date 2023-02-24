@@ -2,6 +2,8 @@
 
 from setuptools import setup, find_packages
 
+os.system("export FLASK_APP=store")
+
 setup(
     name='store',
     version='1.0.0.0',
