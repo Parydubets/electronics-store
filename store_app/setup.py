@@ -11,7 +11,7 @@ setup(
                      ' MySQL database. Created RESTful API and tests',
     url='https://github.com/Parydubets',
     python_requires='>=3.9, <4',
-    packages=find_packages(include=['store']),
+    packages=find_packages(),
     install_requires=[
         "Flask==2.2.3",
         "Jinja2==3.1.2",
