@@ -4,7 +4,8 @@ python:
     - 3.9
 
 install: 
-  - pip install -r requirements.txt
+  - cd store_app 
+  - pip install .
   
 script:
   - export FLASK_APP=store
