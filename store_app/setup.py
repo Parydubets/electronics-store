@@ -20,5 +20,6 @@ setup(
         "Werkzeug==2.2.3",
         "pylint==2.16.2",
         "pytest==7.2.1",
+        "coveralls==3.3.1",
     ],
 )
