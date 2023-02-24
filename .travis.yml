@@ -8,9 +8,6 @@ install:
   - pip install .
   
 script:
-  - export FLASK_APP=store
-  - flask run
-  - pip freeze
   - pytest
 
 service_name: travis-pro
