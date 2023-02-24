@@ -2,5 +2,13 @@ language: python
 
 python:
     - 3.9
-    - 3.10
-    - 3.11
+
+install: 
+  - cd store_app 
+  - pip install .
+  
+script:
+  - pytest
+
+service_name: travis-pro
+repo_token: New7B0MZdsYf5vo72SIvfsJqTC4gY4U0B

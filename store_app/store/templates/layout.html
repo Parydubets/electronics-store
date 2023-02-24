@@ -17,13 +17,13 @@
                 <a class="btn   {% if page=="client" %} active-menu-btn"
                                 {% else %} menu-btn"
                                 {% endif %}
-                href="{{ url_for('clients') }}">Clients</a>
+                href="{{ url_for('bp.clients') }}">Clients</a>
                 <a class="btn   {% if page=="order" %} active-menu-btn"
                                 {% else %} menu-btn"
-                                {% endif %} href="{{ url_for('orders') }}">Orders</a>
+                                {% endif %} href="{{ url_for('bp.orders') }}">Orders</a>
                 <a class="btn {% if page=="product" %} active-menu-btn"
                                 {% else %} menu-btn"
-                                {% endif %} href="{{ url_for('products') }}">Products</a>
+                                {% endif %} href="{{ url_for('bp.products') }}">Products</a>
             </div>
 
             <div class="right-side">
