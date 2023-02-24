@@ -1,5 +1,5 @@
 """ This is the main routes module """
-from flask import render_template, url_for, Blueprint
+from flask import render_template, url_for, Blueprint, redirect
 
 bp = Blueprint('bp', __name__, template_folder="bp")
 @bp.route('/')
@@ -7,6 +7,7 @@ bp = Blueprint('bp', __name__, template_folder="bp")
 def clients():
     """ The main (clients) page """
     return render_template('bp/clients.html', page='client')
+    # redirect(url_for('bp.orders'))
 
 
 @bp.route('/orders')
