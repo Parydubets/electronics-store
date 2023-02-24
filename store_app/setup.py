@@ -14,7 +14,7 @@ setup(
     packages=find_packages(),
     install_requires=[
         "Flask==2.2.3",
-        "Jinja2==3.1.2",
+        "Jinja2==2.10.1",
         "Werkzeug==2.2.3",
         "pylint==2.16.2",
         "pytest==7.2.1",
