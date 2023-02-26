@@ -5,6 +5,8 @@ import os
 
 os.system("export FLASK_APP=store")
 
+os.system("export FLASK_APP=store")
+
 setup(
     name='store',
     version='1.0.0.0',
@@ -16,10 +18,15 @@ setup(
     python_requires='>=3.9, <4',
     packages=find_packages(),
     install_requires=[
+<<<<<<< HEAD
         "Flask==2.2.0",
+=======
+        "Flask==2.0.3",
+>>>>>>> main
         "Jinja2==3.0",
         "Werkzeug==2.2.3",
         "pylint==2.16.2",
         "pytest==7.2.1",
+        "coveralls==3.3.1",
     ],
 )
