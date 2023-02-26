@@ -18,11 +18,7 @@ setup(
     python_requires='>=3.9, <4',
     packages=find_packages(),
     install_requires=[
-<<<<<<< HEAD
-        "Flask==2.2.0",
-=======
         "Flask==2.0.3",
->>>>>>> main
         "Jinja2==3.0",
         "Werkzeug==2.2.3",
         "pylint==2.16.2",
