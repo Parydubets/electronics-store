@@ -10,12 +10,6 @@ def test_hello(client):
     response = client.get('/hello')
     assert response.data == b'Hello, World!'
 
-<<<<<<< HEAD
-def test_clients(client):
-    response = client.get("/clients")
-    assert response.request.path == "/clients"
-    assert response.status_code ==200
-=======
 def test_clients_route(client):
     response = client.get('/')
     assert response.status_code == 200
