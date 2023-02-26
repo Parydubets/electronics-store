@@ -36,4 +36,4 @@ def test_new_order_route(client):
 def test_new_product_route(client):
     response = client.get('/new_product')
     assert response.status_code == 200
->>>>>>> main
+
