@@ -10,7 +10,7 @@ def create_app(test_config=None):
             SECRET_KEY='somerandomkey',
             #DATABASE=os.path.join(app.instance_path, 'store.sqlite'),
             #SQLALCHEMY_DATABASE_URI='sqlite:///'+os.path.join(basedir, 'store.db'),
-            SQLALCHEMY_DATABASE_URI='mysql://root:@127.0.0.1/store',
+            SQLALCHEMY_DATABASE_URI='mysql://root@127.0.0.1:3306/store',
     )
 
     #db_seed()
@@ -77,3 +77,4 @@ def create_app(test_config=None):
         return "Hello, World!"
 
     return app
+#mysql://root:admin@localhost:3306/store
