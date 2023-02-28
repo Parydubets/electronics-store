@@ -24,5 +24,11 @@ setup(
         "pylint==2.16.2",
         "pytest==7.2.1",
         "coveralls==3.3.1",
+        "SQLAlchemy==2.0.4",
+        "mysql==0.0.3",
+        "mysqlclient==2.1.1",
+        "Flask-SQLAlchemy==3.0.3",
+        "Flask-Migrate==4.0.4",
+        "click=8.1.3"
     ],
 )
