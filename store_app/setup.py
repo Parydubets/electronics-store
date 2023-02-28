@@ -29,6 +29,6 @@ setup(
         "mysqlclient==2.1.1",
         "Flask-SQLAlchemy==3.0.3",
         "Flask-Migrate==4.0.4",
-        "click=8.1.3"
+        "click=8.1.3",
     ],
 )
