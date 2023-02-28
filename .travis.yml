@@ -5,11 +5,17 @@ python:
 
 services:
   - mysql
+  
+env: 
+  - FLASK_APP=store
 
+before:
+  - mysql -e 'create database store;'
+  
 install: 
+
   - cd store_app 
   - pip install .
-  - export FLASK_APP=store
   - flask db init
   - flask db migrate
   - flask db upgrade

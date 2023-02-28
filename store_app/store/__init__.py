@@ -10,7 +10,7 @@ def create_app(test_config=None):
             SECRET_KEY='somerandomkey',
             #DATABASE=os.path.join(app.instance_path, 'store.sqlite'),
             #SQLALCHEMY_DATABASE_URI='sqlite:///'+os.path.join(basedir, 'store.db'),
-            SQLALCHEMY_DATABASE_URI='mysql://root:admin@localhost:3306/store',
+            SQLALCHEMY_DATABASE_URI='mysql://root:@127.0.0.1/store',
     )
 
     #db_seed()
@@ -77,12 +77,3 @@ def create_app(test_config=None):
         return "Hello, World!"
 
     return app
-
-"""            ord_pr1 = order_product.insert().values(order_id=1, product_id=1)
-            ord_pr2 = order_product.insert().values(order_id=1, product_id=2)
-            ord_pr3 = order_product.insert().values(order_id=2, product_id=3)
-            ord_pr4 = order_product.insert().values(order_id=3, product_id=2)
-            db.session.execute(ord_pr1)
-            db.session.execute(ord_pr2)
-            db.session.execute(ord_pr3)
-            db.session.execute(ord_pr4)"""
