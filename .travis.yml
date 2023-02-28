@@ -6,6 +6,7 @@ python:
 install: 
   - cd store_app 
   - pip install .
+  - export FLASK_APP=store
   - flask db migrate
   - flask db upgrade
   - flask seed

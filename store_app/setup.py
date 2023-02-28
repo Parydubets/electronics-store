@@ -3,7 +3,6 @@
 from setuptools import setup, find_packages
 import os
 
-os.system("export FLASK_APP=store")
 
 os.system("export FLASK_APP=store")
 
