@@ -8,12 +8,14 @@ services:
   
 env: 
   - FLASK_APP=store
+   
 
 before:
   - mysql -e 'create database store;'
   
 install: 
   - mysql -e \connect travis@127.0.0.1
+  - ls
   - cd store_app 
   - pip install .
   - flask db init
