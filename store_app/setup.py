@@ -29,5 +29,6 @@ setup(
         "Flask-SQLAlchemy==3.0.3",
         "Flask-Migrate==4.0.4",
         "click==8.1.3",
+        "sqlalchemy_utils",
     ],
 )
