@@ -9,9 +9,6 @@ services:
 env: 
   - FLASK_APP=store
    
-
-before:
-  - mysql -e 'create database store;'
   
 install: 
   - ls
