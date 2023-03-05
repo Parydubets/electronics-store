@@ -27,35 +27,18 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for i in range(0, len) %}
                     <tr>
-                        <td>1</td>
-                        <td>Smartphone Q2</td>
-                        <td>200</td>
-                        <td>Phones</td>
-                        <td>2022</td>
-                        <td>25</td>
-                        <td class="edit-row"><a href="#"><i class="fa-solid fa-trash-can"></i></a><a href="edit_product.html"><i class="fa-solid fa-gear"></i></a></td>
-
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Laptop SM234</td>
-                        <td>1150</td>
-                        <td>Laptops</td>
-                        <td>2022</td>
-                        <td>13</td>
-                        <td class="edit-row"><a href="#"><i class="fa-solid fa-trash-can"></i></a><a href="edit_product.html"><i class="fa-solid fa-gear"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Smartphone BM3</td>
-                        <td>240</td>
-                        <td>Phones</td>
-                        <td>2023</td>
-                        <td>31</td>
+                        <td>{{ data[i].id }}</td>
+                        <td>{{ data[i].name }}</td>
+                        <td>{{ data[i].cost }}</td>
+                        <td>{{ data[i].category }}</td>
+                        <td>{{ data[i].year }}</td>
+                        <td>{{ data[i].amount }}</td>
                         <td class="edit-row"><a href="#"><i class="fa-solid fa-trash-can"></i></a><a href="edit_product.html"><i class="fa-solid fa-gear"></i></a></td>
                     </tr>
 
+                    {% endfor  %}
                 </tbody>
             </table>
         </div>

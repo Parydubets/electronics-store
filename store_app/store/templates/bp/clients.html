@@ -28,36 +28,17 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for i in range(0, len) %}
                     <tr>
-                        <td>1</td>
-                        <td>Peter</td>
-                        <td>Parker</td>
-                        <td>spiderman@gmail.com</td>
-                        <td>+12345612345</td>
-                        <td>5</td>
-                        <td>18/01/2023</td>
+                        <td>{{ data[i].id }}</td>
+                        <td>{{ data[i].first_name }}</td>
+                        <td>{{ data[i].last_name }}</td>
+                        <td>{{ data[i].email }}</td>
+                        <td>{{ data[i].phone }}</td>
+                        <td>{{ orders[i] }}</td>
+                        <td>{{ data[i].date }}</td>
                         <td class="edit-row"><a href="#"><i class="fa-solid fa-trash-can"></i></a><a href="edit_client.html"><i class="fa-solid fa-gear"></i></a></td>
-
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Joel</td>
-                        <td>Miller</td>
-                        <td>thelastjoel@gmail.com</td>
-                        <td>+12323232323</td>
-                        <td>1</td>
-                        <td>03/02/2023</td>
-                        <td class="edit-row"><a href="#"><i class="fa-solid fa-trash-can"></i></a><a href="edit_client.html"><i class="fa-solid fa-gear"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Johnny</td>
-                        <td>Silverhand</td>
-                        <td>samurai@gmail.com</td>
-                        <td>+12077207720</td>
-                        <td>2</td>
-                        <td>20/08/2023</td>
-                        <td class="edit-row"><a href="#"><i class="fa-solid fa-trash-can"></i></a><a href="edit_client.html"><i class="fa-solid fa-gear"></i></a></td>
+                    {% endfor %}
                     </tr>
 
                 </tbody>
@@ -68,3 +49,4 @@
 </body>
 
 {% endblock %}
+
