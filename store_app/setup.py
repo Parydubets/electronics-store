@@ -29,5 +29,8 @@ setup(
         "Flask-SQLAlchemy==3.0.3",
         "Flask-Migrate==4.0.4",
         "click==8.1.3",
+        "marshmallow==3.19.0",
+        "marshmallow-sqlalchemy==0.29.0",
+        "flask-marshmallow==0.14.0",
     ],
 )
