@@ -8,12 +8,12 @@ services:
   
 env: 
   - FLASK_APP=store
-
-before:
-  - mysql -e 'create database store;'
-  
+  - DB_USER = root
+  - DB_PASSWORD =''
+  - DB_HOST = 127.0.0.1:3306
+   
 install: 
-  - mysql -e \connect root@127.0.0.1:3306
+  - mysql -e 'CREATE DATABASE store;'
   - cd store_app 
   - pip install .
   - flask db init
