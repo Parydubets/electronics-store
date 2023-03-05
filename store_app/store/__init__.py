@@ -9,13 +9,10 @@ from marshmallow import Schema, fields
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     basedir = os.path.abspath(os.path.dirname(__file__))
-    db_user = os.environ.get('DB_USER')
-    db_password = os.environ.get('DB_PASSWORD')
-    db_host = os.environ.get('DB_HOST')
     app.config.from_mapping(
             SECRET_KEY='somerandomkey',
-            #SQLALCHEMY_DATABASE_URI='mysql://root@127.0.0.1:3306/store',
-            SQLALCHEMY_DATABASE_URI='mysql://{}:{}@{}/store'.format(db_user,db_password,db_host),
+            SQLALCHEMY_DATABASE_URI='mysql://root@127.0.0.1:3306/store',
+            #SQLALCHEMY_DATABASE_URI='mysql://{}:{}@{}/store'.format(db_user,db_password,db_host),
     )
 
     def set_test(test_config):
@@ -110,6 +107,10 @@ def create_app(test_config=None):
     return app
 
 #mysql://root:admin@localhost:3306/store
-"""    db_user = 'root'
+""" 
+    db_user = os.environ.get('DB_USER')
+    db_password = os.environ.get('DB_PASSWORD')
+    db_host = os.environ.get('DB_HOST')
+    db_user = 'root'
     db_password = 'admin'
     db_host = '127.0.0.1:3306'"""
