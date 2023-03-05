@@ -1,7 +1,5 @@
 import pytest
 from store import create_app
-import click
-
 
 @pytest.fixture
 def app():
