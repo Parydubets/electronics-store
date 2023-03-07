@@ -5,6 +5,7 @@
     <title>Management</title>
     <link type= "text/css" href= "../static/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <script src="https://kit.fontawesome.com/3f636a5948.js" crossorigin="anonymous"></script>
 </head>
 
@@ -33,6 +34,18 @@
             </div>
 
         </div>
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+
+{% endwith %}
 {% block content %}
 {% endblock %}
 

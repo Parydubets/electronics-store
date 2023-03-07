@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+
+    <div class="center">
+    <div class="block">
+    <h3>Do you really want to delete {{ item }} with id = {{ id }} ?</h3>
+
+    <form class="edit-form" name="Create client" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="edit">
+            {{ form.cancel( class_="cancel") }}
+            {{ form.submit( class_="save" ) }}
+        </div>
+    </form>
+    </div></div>
+{% endblock %}

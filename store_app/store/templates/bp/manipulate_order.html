@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block content %}
+
+            <div class="center">
+                <form class="edit-form" name="Create order" method="post" novalidate>
+                    {{ form.hidden_tag() }}
+                        <div class="block">
+                            {{ form.name.label }}
+                            {{ form.name }}
+                            {% for error in form.name.errors %}
+                                <span class="error-message">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="block">
+                            {{ form.phone.label }}
+                            {{ form.phone }}
+                            {% for error in form.phone.errors %}
+                                <span class="error-message">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="block">
+                            {{ form.order.label }}
+                            {{ form.order }}
+                            {% for error in form.order.errors %}
+                                <span class="error-message">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="block">
+                            {{ form.address.label }}
+                            {{ form.address }}
+                            {% for error in form.address.errors %}
+                                <span class="error-message">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="block">
+                            {{ form.date.label }}
+                            {{ form.date (id_=date) }}
+                            {% for error in form.date.errors %}
+                                <span class="error-message">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="edit">
+                            {{ form.cancel( class_="cancel") }}
+                            {{ form.submit( class_="save" ) }}
+                            </div>
+            </form>
+        </div>
+
+
+</body>
+{% endblock %}

@@ -6,16 +6,12 @@ order_product = db.Table(
     'order_product',
     db.Column('order_id', db.Integer, db.ForeignKey('orders.id')),
     db.Column('product_id', db.Integer, db.ForeignKey('products.id')),
-    db.Column('quantity', db.Integer),
 )
-
-
 
 
 class Client(db.Model):
     __tablename__ = 'clients'
 
-    #serialize_only = ('id', 'first_name', 'last_name', 'email', 'phone', 'date')
     id = Column(Integer, primary_key=True, autoincrement=True)
     first_name = Column(String(40), nullable=False)
     last_name = Column(String(40), nullable=False)
@@ -24,6 +20,7 @@ class Client(db.Model):
     date = Column(Date, nullable=True)
     orders = db.relationship('Order', backref='clients',
                                 lazy='dynamic')
+
 
 class Order(db.Model):
     __tablename__ = 'orders'

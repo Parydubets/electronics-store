@@ -11,8 +11,8 @@ def create_app(test_config=None):
     basedir = os.path.abspath(os.path.dirname(__file__))
     app.config.from_mapping(
             SECRET_KEY='somerandomkey',
-            SQLALCHEMY_DATABASE_URI='mysql://root@127.0.0.1:3306/store',
-            #SQLALCHEMY_DATABASE_URI='mysql://{}:{}@{}/store'.format(db_user,db_password,db_host),
+            #SQLALCHEMY_DATABASE_URI='mysql://root@127.0.0.1:3306/store',
+            SQLALCHEMY_DATABASE_URI='mysql://root:admin@localhost:3306/store',
     )
 
     def set_test(test_config):
@@ -29,7 +29,6 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
-    print(db_user, db_password, db_host)
 
     from .views import bp
     from .models import db, Client, Product, Order,order_product
@@ -43,11 +42,11 @@ def create_app(test_config=None):
     def seed():
          with app.app_context():
             user1 = Client(first_name="Peter", last_name="Parker", email="spiderman@gmail.com",
-                               phone="+12345612345", date="2023-01-18")
+                               phone="+123456123450", date="2023-01-18")
             user2 = Client(first_name="Joel", last_name="Miller", email="thelastjoel@gmail.com",
-                               phone="+12323232323", date="2023-02-03")
+                               phone="+123232323230", date="2023-02-03")
             user3 = Client(first_name="Johnny", last_name="Silverhand", email="samurai@gmail.com",
-                               phone="+12077207720", date="2023-08-20")
+                               phone="+120772077200", date="2023-08-20")
             db.session.add(user1)
             db.session.add(user2)
             db.session.add(user3)
@@ -67,10 +66,10 @@ def create_app(test_config=None):
             db.session.add(order2)
             db.session.add(order3)
             db.session.commit()
-            ord_pr1 = order_product.insert().values(order_id=1, product_id=1, quantity=1)
-            ord_pr2 = order_product.insert().values(order_id=1, product_id=2, quantity=1)
-            ord_pr3 = order_product.insert().values(order_id=2, product_id=3, quantity=1)
-            ord_pr4 = order_product.insert().values(order_id=3, product_id=3, quantity=2)
+            ord_pr1 = order_product.insert().values(order_id=1, product_id=1)
+            ord_pr2 = order_product.insert().values(order_id=1, product_id=2)
+            ord_pr3 = order_product.insert().values(order_id=2, product_id=3)
+            ord_pr4 = order_product.insert().values(order_id=3, product_id=3)
             db.session.execute(ord_pr1)
             db.session.execute(ord_pr2)
             db.session.execute(ord_pr3)
@@ -81,30 +80,29 @@ def create_app(test_config=None):
     @app.route("/hello")
     def hello():
         resp = Client.query.all()
-        class ObjectSchema(Schema):
+
+        class OrderSchema(Schema):
+            id = fields.Str()
+            cost = fields.Str()
+            address = fields.Str()
+        class ClientSchema(Schema):
             id = fields.Str()
             first_name = fields.Str()
+            phone = fields.Str()
+            date = fields.Str()
+            orders = fields.List(fields.Nested(OrderSchema))
 
-        object_schema = ObjectSchema()
-        json_string = object_schema.dumps(resp, many=True)
-        print(json_string)
+        client_schema = ClientSchema()
+        json_string = client_schema.dumps(resp, many=True)
+        data=json.loads(json_string)
         return "Hello, World!"
 
-    class ClientSchema(ma.Schema):
-        class Meta:
-            fields = ('id', 'first_name', 'last_name', 'email', 'phone', 'date', 'orders.id')
-
-    class OrdeeSchema(ma.Schema):
-        class Meta:
-            fields = ('id', 'date', 'cost')
-
-
-    client_schema = ClientSchema()
-    clients_schema = ClientSchema(many=True)
-
-    order_schema = ClientSchema()
-    orders_schema = ClientSchema(many=True)
     return app
+"""        print(data[0]['orders'])
+        print(data[1]['orders'])
+        print(data[2]['orders'])
+        print(json_string)"""
+
 
 #mysql://root:admin@localhost:3306/store
 """ 

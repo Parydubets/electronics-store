@@ -11,6 +11,9 @@ def get_clients_list():
             orders.append(len(count))
     return data, orders
 
+def get_client_with_filter(model, filter, compare):
+    return model.query.filter(filter == compare).first()
+
 def get_orders_list():
     with current_app.app_context():
         data = Order.query.all()
@@ -22,9 +25,21 @@ def get_orders_list():
             order.append(products)
     return data, order
 
+def get_item_with_filter(clas, filter, compare):
+    return clas.query.filter(filter == compare).first()
+
+
 def get_products_list():
     with current_app.app_context():
         data = Product.query.all()
         for item in data:
             print(item.id)
     return data
+
+def commit():
+    return db.session.commit()
+
+def create_item(model):
+    db.session.add(model)
+    commit()
+    return 0

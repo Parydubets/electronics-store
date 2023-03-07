@@ -261,3 +261,22 @@ input[type="submit" i] {
     display: flex;
     max-width: 50%;
 }
+
+.alert{
+    display: flex;
+    color: #721c24;
+    background: #f8d7da;
+    border-color: #f5c6cb;
+    flex-direction: column;
+    justify-content: center;    align-items: center;
+    height: 2em;
+}
+
+.error-message{
+    color: #a62632;
+    font-size: 14pt;
+}
+
+.deleted{
+    color: #a62632;
+}
