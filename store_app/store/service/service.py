@@ -1,22 +1,30 @@
 from flask import current_app, jsonify
+from sqlalchemy.sql import func
 from ..models import db, Client, Order, Product
 
-def get_clients_list():
+def get_clients_list(filtration, **kwargs):
+
     with current_app.app_context():
-        data = Client.query.all()
+        if filtration == True:
+            data = Client.query.filter(Client.date >= kwargs['date_from']).filter(Client.date <= kwargs['date_to']).all()
+        else:
+            data = Client.query.all()
         orders = []
         for item in data:
-            print("items: ", len(item.orders.all()))
             count = Order.query.filter(Order.user_id == item.id).all()
             orders.append(len(count))
+
     return data, orders
 
 def get_client_with_filter(model, filter, compare):
     return model.query.filter(filter == compare).first()
 
-def get_orders_list():
+def get_orders_list(filtration, **kwargs):
     with current_app.app_context():
-        data = Order.query.all()
+        if filtration == True:
+            data = Order.query.filter(Order.date >= kwargs['date_from']).filter(Order.date <= kwargs['date_to']).all()
+        else:
+            data = Order.query.all()
         order = []
         for item in data:
             products=[]
@@ -29,11 +37,14 @@ def get_item_with_filter(clas, filter, compare):
     return clas.query.filter(filter == compare).first()
 
 
-def get_products_list():
+def get_products_list(filtration, **kwargs):
     with current_app.app_context():
-        data = Product.query.all()
-        for item in data:
-            print(item.id)
+        if filtration == True:
+            data = Product.query.filter(Product.cost >= kwargs['price_from']).filter(Product.cost <= kwargs['price_to']).all()
+            print(Product.query.filter(Product.cost >= kwargs['price_from']).all(), kwargs['price_from'], kwargs['price_to'])
+        else:
+            data = Product.query.all()
+
     return data
 
 def commit():
@@ -43,3 +54,10 @@ def create_item(model):
     db.session.add(model)
     commit()
     return 0
+
+def sum_of_orders():
+    result = db.session.query(
+        func.sum(Order.cost)
+    ).scalar()
+    print(result)
+    return result

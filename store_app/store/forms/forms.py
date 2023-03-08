@@ -3,6 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, DateField, DecimalField, IntegerField
 from wtforms.validators import DataRequired, Length, Email, ValidationError, NumberRange
 from datetime import date
+
 from ..models import Client
 
 year=date.today()
@@ -32,13 +33,22 @@ class CreateOrderForm(FlaskForm):
 
 class CreateProductForm(FlaskForm):
     name        = StringField("Product name", validators=[DataRequired(), Length(min=6, max=40)])
-    cost       = DecimalField("Price", validators=[DataRequired(), NumberRange(min=1, max=100000)])
+    cost       = IntegerField("Price", validators=[DataRequired(), NumberRange(min=1, max=100000)])
     category    = StringField("Category", validators=[DataRequired(), Length(min=2, max=20)])
     year        = IntegerField("Year",  validators=[DataRequired(), NumberRange(min=2000, max=2023)])
     amount      = IntegerField("Amount", validators=[DataRequired(), NumberRange(min=1, max=100000)])
     cancel = SubmitField("Cancel")
     submit = SubmitField("Save")
 
+
+class Filters(FlaskForm):
+    date_from   = DateField("from:", validators=[DataRequired()])
+    date_to     = DateField("to:", validators=[DataRequired()])
+    price_from  = IntegerField("from:",  validators=[DataRequired()])
+    price_to    = IntegerField("to:",  validators=[DataRequired()])
+    refresh     = SubmitField("Filter")
+
 class DeleteItem(FlaskForm):
     cancel = SubmitField("No")
     submit = SubmitField("Yes")
+
