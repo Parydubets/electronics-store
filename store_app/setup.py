@@ -32,5 +32,7 @@ setup(
         "marshmallow==3.19.0",
         "marshmallow-sqlalchemy==0.29.0",
         "flask-marshmallow==0.14.0",
+        "WTForms==3.0.1",
+        "Flask-WTF==1.1.1",
     ],
 )
