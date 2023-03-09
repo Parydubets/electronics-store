@@ -34,5 +34,6 @@ setup(
         "flask-marshmallow==0.14.0",
         "WTForms==3.0.1",
         "Flask-WTF==1.1.1",
+        "email-validator==1.3.1",
     ],
 )
