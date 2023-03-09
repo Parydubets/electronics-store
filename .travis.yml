@@ -13,7 +13,6 @@ install:
   - mysql -e 'CREATE DATABASE store;'
   - cd store_app 
   - pip install .
-  - flask db init
   - flask db migrate
   - flask db upgrade
   - flask seed
