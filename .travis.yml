@@ -21,6 +21,7 @@ install:
   - coverage run --source=store -m pytest
 script:
   - pytest
+  - covrealls
 after:
   - covrealls
 
