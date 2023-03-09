@@ -15,11 +15,6 @@ class CreateClientForm(FlaskForm):
     cancel = SubmitField("Cancel")
     submit = SubmitField("Save")
 
-    def validate_email(self,email):
-        client =  Client.query.filter(Client.email == email).first()
-        print(client)
-        if client:
-            raise ValidationError("Client with such email already exists")
 
 
 class CreateOrderForm(FlaskForm):
