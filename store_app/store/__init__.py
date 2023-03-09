@@ -11,8 +11,8 @@ def create_app(test_config=None):
     basedir = os.path.abspath(os.path.dirname(__file__))
     app.config.from_mapping(
             SECRET_KEY='somerandomkey',
-            #SQLALCHEMY_DATABASE_URI='mysql://root@127.0.0.1:3306/store',
-            SQLALCHEMY_DATABASE_URI='mysql://root:admin@localhost:3306/store',
+            SQLALCHEMY_DATABASE_URI='mysql://root@127.0.0.1:3306/store',
+            #SQLALCHEMY_DATABASE_URI='mysql://root:admin@localhost:3306/store',
     )
 
     def set_test(test_config):
