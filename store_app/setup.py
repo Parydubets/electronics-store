@@ -35,5 +35,6 @@ setup(
         "WTForms==3.0.1",
         "Flask-WTF==1.1.1",
         "email-validator==1.3.1",
+        "SQLAlchemy-Utils==0.40.0",
     ],
 )
