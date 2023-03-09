@@ -8,3 +8,5 @@ Build success by Travis-CI
 
 Test coverage by coveralls
 [![Coverage Status](https://coveralls.io/repos/github/Parydubets/electronics-store/badge.svg?branch=main)](https://coveralls.io/github/Parydubets/electronics-store?branch=main)
+
+[![Coverage Status](https://coveralls.io/repos/github/Parydubets/electronics-store/badge.svg?branch=manipulation_pages)](https://coveralls.io/github/Parydubets/electronics-store?branch=manipulation_pages)
