@@ -122,35 +122,29 @@ def new_order():
     """ Order creation page """
     form = CreateOrderForm()
     if form.cancel.data:
-        return redirect('/clients')
+        return redirect('/orders')
     else:
         if form.validate_on_submit():
             full_name = form.name.data
             phone = form.phone.data
             positions = form.order.data
             client = get_item_with_filter(Client, Client.phone, phone)
-            if client:
+            if client and client.first_name+' '+client.last_name == full_name:
                 name = full_name.split(" ")
-                order = positions.split(", ")
-                print(order)
+                order_list = positions.split(", ")
+                available = True
+                if len(order_list) != len(set(order_list)):
+                    flash("You can order only 1 unit per product")
+                    available=False
                 cost = 0
                 items=[]
                 checked = []
                 if name[0] == client.first_name and name[1] == client.last_name:
-                    available = True
-                    for item in order:
-                        if item in checked:
-                            flash("You can order only 1 unit per product")
-                            available = False
+
+                    for item in order_list:
                         checked.append(item)
-                        print(item, checked)
                         product = get_item_with_filter(Product, Product.name, item)
-                        if item not in product.name:
-                            flash("No product with name {}".format(item))
-                            available = False
-                        elif product.amount < 1:
-                            flash("You`ve ordered too much or {} is out of stock".format(item))
-                            available = False
+                        validate_order(item, product)
                         if available == True:
                             cost += product.cost
                             items.append(product)
@@ -178,37 +172,24 @@ def edit_order(id):
         form = CreateOrderForm(name=client.first_name+" "+client.last_name, phone=client.phone, order=items, address=order.address,
                                  date=order.date, )
         if form.cancel.data:
-            return redirect('/clients')
+            return redirect('/orders')
         else:
             if form.validate_on_submit():
-                print("validate")
                 name = form.name.data.split(" ")
                 phone = form.phone.data
                 order_list = form.order.data.split(", ")
+                if len(order_list) != len(set(order_list)):
+                    flash("You can order only 1 unit per product")
                 client = get_item_with_filter(Client, Client.phone, phone)
                 if client:
-                    print('ckient', name)
-                    print('order_list',order_list)
                     cost = 0
                     checked=[]
                     if name[0] == client.first_name and name[1] == client.last_name:
                         available = True
                         for item in order_list:
-                            if item in checked:
-                                flash("You can order only 1 unit per product")
-                                available = False
                             checked.append(item)
-                            print("Checking: ",item, checked)
-                            print(checked[0])
-
-                            product = get_item_with_filter(Product, Product.name, item)
-                            print('product', product)
-                            if item not in product.name:
-                                flash("No product with name {}".format(item))
-                                available = False
-                            elif product.amount < 1:
-                                flash("You`ve ordered too much or {} is out of stock".format(item))
-                                available = False
+                            order = get_item_with_filter(Product, Product.name, item)
+                            available = validate_order(item, order)
                         if available == True:
                             order.items=[]
                             order.cost=0
@@ -217,23 +198,13 @@ def edit_order(id):
                                 order.cost+=buf.cost
                                 order.items.append(buf)
                                 commit()
-                                print("order.items", order.items)
+                        else:
+                            return redirect('/edit_order/'+str(id))
                         return redirect('/orders')
                 else:
                     flash("No client with this data")
     return render_template('bp/manipulate_order.html', page='order', form=form)
 
-
-"""   if available == True:
-       cost += product.cost
-       order.items.append(product)
-       product.amount -= 1
-       commit()
-       print("Pushing  ",items)
-       order.items = items
-       commit()
-       create_item(Order(date=form.date.data, user_id=client.id, cost=cost,
-                             address=form.address.data, items=items))"""
 
 @bp.route('/delete_order/<int:id>', methods=['GET', 'POST'])
 def delete_order(id):
@@ -243,7 +214,6 @@ def delete_order(id):
     else:
         if form.validate_on_submit():
             order = get_item_with_filter(Order, Order.id, id)
-            print(order)
             db.session.delete(order)
             db.session.commit()
             return redirect('/orders')
@@ -256,7 +226,6 @@ def products():
     form = Filters()
     price_from = request.args.get('price_from')
     price_to = request.args.get('price_to')
-    print("price range: ", price_from, price_to)
     if price_from != None and price_to != None:
         data = get_products_list(True, price_from=price_from, price_to=price_to)
         if data == []:
@@ -281,9 +250,10 @@ def new_product():
             amount = form.amount.data
             product_in_db = get_item_with_filter(Product, Product.name, name)
             if product_in_db == None:
-                print("Can add")
                 create_item(Product(name=name, category=category, cost=cost, amount=amount, year=year))
                 return redirect('/products')
+            else:
+                flash("A product with this name already exists")
     return render_template('bp/manipulate_product.html', page='product', form=form)
 
 
@@ -319,8 +289,20 @@ def delete_product(id):
     else:
         if form.validate_on_submit():
             product = get_item_with_filter(Product, Product.id, id)
-            print(product)
             db.session.delete(product)
             db.session.commit()
             return redirect('/products')
     return  render_template('bp/delete_item.html', type="new", form=form, item = "product", id = id)
+
+
+@bp.errorhandler(404)
+def page_not_found():
+    return render_template('page_not_found.html',type="new"), 404
+
+def validate_order(item, product):
+    if item not in product.name:
+        flash("No product with name {}".format(item))
+        return False
+    elif product.amount < 1:
+        flash("You`ve ordered too much or {} is out of stock".format(item))
+        return False

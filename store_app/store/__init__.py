@@ -1,9 +1,9 @@
 """ The app initialization file """
 import os
-from flask import Flask, Blueprint, json,jsonify
+from flask import Flask, Blueprint, json,jsonify, render_template
 from flask_migrate import Migrate, init
-from flask_marshmallow import Marshmallow
-from marshmallow import Schema, fields
+#from flask_marshmallow import Marshmallow
+#from marshmallow import Schema, fields
 
 
 def create_app(test_config=None):
@@ -33,7 +33,7 @@ def create_app(test_config=None):
     from .views import bp
     from .models import db, Client, Product, Order,order_product
     db.init_app(app)
-    ma = Marshmallow(app)
+    #ma = Marshmallow(app)
     app.register_blueprint(bp)
     migrate = Migrate(app, db, directory='store/migrations')
 
@@ -76,11 +76,20 @@ def create_app(test_config=None):
             db.session.execute(ord_pr4)
             db.session.commit()
             print("Seeded successfully")
+            return "Seeded successfully"
 
     @app.route("/hello")
     def hello():
         resp = Client.query.all()
+        return "Hello, World!"
 
+    @app.errorhandler(404)
+    def page_not_found(error):
+        return render_template('bp/page_not_found.html', type="new"), 404
+
+    return app
+
+"""         
         class OrderSchema(Schema):
             id = fields.Str()
             cost = fields.Str()
@@ -94,21 +103,6 @@ def create_app(test_config=None):
 
         client_schema = ClientSchema()
         json_string = client_schema.dumps(resp, many=True)
-        data=json.loads(json_string)
-        return "Hello, World!"
-
-    return app
-"""        print(data[0]['orders'])
-        print(data[1]['orders'])
-        print(data[2]['orders'])
-        print(json_string)"""
-
+        data=json.loads(json_string)"""
 
 #mysql://root:admin@localhost:3306/store
-""" 
-    db_user = os.environ.get('DB_USER')
-    db_password = os.environ.get('DB_PASSWORD')
-    db_host = os.environ.get('DB_HOST')
-    db_user = 'root'
-    db_password = 'admin'
-    db_host = '127.0.0.1:3306'"""

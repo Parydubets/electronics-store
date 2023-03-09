@@ -23,4 +23,5 @@ def runner(app):
 
 def test_hello_command(runner):
     result = runner.invoke(args="seed")
+    print(result.output)
     assert "successfully" in result.output

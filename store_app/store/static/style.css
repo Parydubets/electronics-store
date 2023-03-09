@@ -284,3 +284,7 @@ input[type="submit" i] {
 .deleted{
     color: #a62632;
 }
+
+#not_found{
+    display: flex;
+}
