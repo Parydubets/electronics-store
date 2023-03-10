@@ -19,7 +19,6 @@ install:
   - flask seed
   - cd ..
   - pip install coveralls
-  - coverage run --source=store -m pytest
 script:
   - pytest
   - covrealls
