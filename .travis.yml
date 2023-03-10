@@ -20,7 +20,7 @@ install:
   - cd ..
   - pip install coveralls
 script:
-  - coverage run -m pytest tests
+  - coverage run -m pytest
 after_script:
   - covrealls
 
