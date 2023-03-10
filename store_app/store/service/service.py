@@ -7,7 +7,7 @@
 
 from flask import current_app#, jsonify
 from sqlalchemy.sql import func
-from ..models import db, Client, Order, Product
+from ..models import db, Client, Order, Product, Base
 
 def get_clients_list(filtration, **kwargs):
     """ Returns list of clients and amount of orders """
@@ -17,15 +17,9 @@ def get_clients_list(filtration, **kwargs):
                 .filter(Client.date <= kwargs['date_to']).all()
         else:
             data = Client.query.all()
-        orders = []
-        for item in data:
-            count = Order.query.filter(Order.user_id == item.id).all()
-            orders.append(len(count))
-    return data, orders
+            print(data)
+    return data
 
-"""def get_client_with_filter(model, filter, compare):
-    #Returns single client object
-    return model.query.filter(filter == compare).first()"""
 
 def get_orders_list(filtration, **kwargs):
     """ Returns list of orders """
@@ -38,7 +32,7 @@ def get_orders_list(filtration, **kwargs):
         order = []
         for item in data:
             products=[]
-            for i in item.items:
+            for i in item.products:
                 products.append(i.name)
             order.append(products)
     return data, order
@@ -46,6 +40,9 @@ def get_orders_list(filtration, **kwargs):
 def get_item_with_filter(clas, filter, compare):
     """ Returns single Client/Order/Product object"""
     return clas.query.filter(filter == compare).first()
+def get_items_with_filter(clas, filter, compare):
+    """ Returns single Client/Order/Product object"""
+    return clas.query.filter(filter == compare).all()
 
 
 def get_products_list(filtration, **kwargs):
@@ -60,9 +57,19 @@ def get_products_list(filtration, **kwargs):
             data = Product.query.all()
     return data
 
+def get_products():
+    with current_app.app_context():
+
+        return Order.query.all()
+
+def edit_item(item):
+    db.session.add(item)
+    db.session.commit()
+    return True
 def commit():
     """ Commits database changes """
-    return db.session.commit()
+    db.session.commit()
+    return True
 
 def create_item(model):
     """ Creates a row in database"""
@@ -70,10 +77,13 @@ def create_item(model):
     commit()
     return 1
 
+def delete_item(item):
+    db.session.delete(item)
+    db.session.commit()
+
 def sum_of_orders():
     """ Returns sum of all orders price """
     result = db.session.query(
         func.sum(Order.cost)
     ).scalar()
-    print(result)
     return result

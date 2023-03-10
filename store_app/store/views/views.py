@@ -1,22 +1,14 @@
 """ This is the main routes module """
 from flask import render_template, url_for, Blueprint, redirect, flash, request
-from marshmallow import Schema, fields
 from datetime import date
-from ..models import Client, Order, db, order_product
+from ..models import Client, Order, db
 from ..service import *
+#from ..rest import api
 from ..forms import CreateClientForm, CreateOrderForm, CreateProductForm, DeleteItem, Filters
 from sqlalchemy import update
 
 bp = Blueprint('bp', __name__, template_folder="bp")
 
-
-class ClientSchema(Schema):
-    id = fields.Str()
-    first_name = fields.Str()
-
-class OrderSchema(Schema):
-    id = fields.Str()
-    cost = fields.Str()
 
 @bp.route('/')
 @bp.route('/clients')
@@ -31,8 +23,8 @@ def clients():
         if data == []:
             flash("No rows found")
     else:
-        data, orders = get_clients_list(False)
-    return render_template('bp/clients.html', page='client', data=data, orders=orders, len=len(data), form=form)
+        data = get_clients_list(False)
+    return render_template('bp/clients.html', page='client', data=data, form=form)
 
 
 @bp.route('/new_client', methods=['GET', 'POST'])
@@ -50,9 +42,8 @@ def new_client():
             elif Client.query.filter(Client.phone == phone).first():
                 flash("Phone number already in use")
             else:
-                db.session.add(Client(first_name=form.first_name.data, last_name=form.last_name.data,
+                edit_item(Client(first_name=form.first_name.data, last_name=form.last_name.data,
                                       email=form.email.data, phone=form.phone.data, date=date.today()))
-                db.session.commit()
                 return redirect('/clients')
     return render_template('bp/manipulate_client.html', page='client', form=form)
 
@@ -74,8 +65,7 @@ def edit_client(id):
                     client.last_name=form.last_name.data
                     client.email=form.email.data
                     client.phone=form.phone.data
-                    db.session.add(client)
-                    db.session.commit()
+                    edit_item(client)
                     return redirect('/clients')
     return render_template('bp/manipulate_client.html', page='product', form=form)
 
@@ -89,8 +79,7 @@ def delete_client(id):
         if form.validate_on_submit():
             client = get_item_with_filter(Client, Client.id, id)
             print(client)
-            db.session.delete(client)
-            db.session.commit()
+            delete_item(client)
             return redirect('/clients')
     return  render_template('bp/delete_item.html', type="new", form=form, item = "client", id = id)
 
@@ -124,7 +113,7 @@ def new_order():
     if form.cancel.data:
         return redirect('/orders')
     else:
-        if form.validate_on_submit():
+       if form.validate_on_submit():
             full_name = form.name.data
             phone = form.phone.data
             positions = form.order.data
@@ -145,17 +134,22 @@ def new_order():
                         checked.append(item)
                         product = get_item_with_filter(Product, Product.name, item)
                         validate_order(item, product)
-                        if available == True:
-                            cost += product.cost
-                            items.append(product)
-                            product.amount -= 1
-                            commit()
-                            create_item(Order(date=form.date.data, user_id=client.id, cost=cost,
-                                              address=form.address.data, items=items))
 
-                    return redirect('/orders')
+                    if available == True:
+                        order = Order(date=form.date.data, user_id=client.id, cost=cost,
+                                              address=form.address.data, products=items)
+
+                        for item in checked:
+                            buf = get_item_with_filter(Product, Product.name, item)
+
+                            order.cost += buf.cost
+                            order.products.append(buf)
+                            buf.amount-=1
+                            commit()
+                        create_item(order)
             else:
                 flash("No client with this data")
+            return redirect('/orders')
     return render_template('bp/manipulate_order.html', page='order', form=form)
 
 
@@ -164,7 +158,7 @@ def edit_order(id):
     """ Product creation page """
     order = get_item_with_filter(Order, Order.id, id)
     client = get_item_with_filter(Client, Client.id, order.user_id)
-    items = [i.name for i in order.items]
+    items = [i.name for i in order.products]
     items = ', '.join(items)
     if order == None:
         flash("There's no product with id {}".format(id))
@@ -186,18 +180,25 @@ def edit_order(id):
                     checked=[]
                     if name[0] == client.first_name and name[1] == client.last_name:
                         available = True
+                        print("halo", order_list)
                         for item in order_list:
                             checked.append(item)
-                            order = get_item_with_filter(Product, Product.name, item)
-                            available = validate_order(item, order)
+                            product = get_item_with_filter(Product, Product.name, item)
+                            available = validate_order(item, product)
+                            print(item, checked, available)
                         if available == True:
-                            order.items=[]
                             order.cost=0
+                            order.products=[]
+                            print("available")
                             for item in checked:
+                                print("checked")
                                 buf = get_item_with_filter(Product, Product.name, item)
                                 order.cost+=buf.cost
-                                order.items.append(buf)
-                                commit()
+                                order.products.append(buf)
+                                print("product: ", buf.name,buf.cost)
+                                print("order: ", order.products,order.cost)
+
+                            edit_item(order)
                         else:
                             return redirect('/edit_order/'+str(id))
                         return redirect('/orders')
@@ -214,8 +215,7 @@ def delete_order(id):
     else:
         if form.validate_on_submit():
             order = get_item_with_filter(Order, Order.id, id)
-            db.session.delete(order)
-            db.session.commit()
+            delete_item(order)
             return redirect('/orders')
     return  render_template('bp/delete_item.html', type="new", form=form, item = "order", id = id)
 
@@ -275,8 +275,7 @@ def edit_product(id):
                     product.cost=form.cost.data
                     product.amount=form.amount.data
                     product.year=form.year.data
-                    db.session.add(product)
-                    db.session.commit()
+                    edit_item(product)
                     return redirect('/products')
     return render_template('bp/manipulate_product.html', page='product', form=form)
 
@@ -289,8 +288,7 @@ def delete_product(id):
     else:
         if form.validate_on_submit():
             product = get_item_with_filter(Product, Product.id, id)
-            db.session.delete(product)
-            db.session.commit()
+            delete_item(product)
             return redirect('/products')
     return  render_template('bp/delete_item.html', type="new", form=form, item = "product", id = id)
 
@@ -306,3 +304,4 @@ def validate_order(item, product):
     elif product.amount < 1:
         flash("You`ve ordered too much or {} is out of stock".format(item))
         return False
+    return True
