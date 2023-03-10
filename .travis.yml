@@ -21,7 +21,7 @@ install:
   - pip install coveralls
 script:
   - pytest
-  - covrealls
+  - coveralls
 after:
   - covrealls
 
