@@ -18,6 +18,7 @@ install:
   - flask db upgrade
   - flask seed
   - pip install coveralls
+  - cd..
   - coverage run --source=store -m pytest
 script:
   - pytest
