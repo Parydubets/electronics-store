@@ -21,7 +21,6 @@ install:
   - pip install coveralls
 script:
   - coverage run -m pytest
-after_script:
   - covrealls
 
 service_name: travis-pro
