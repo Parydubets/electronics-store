@@ -19,11 +19,11 @@ install:
   - flask seed
   - pip install coveralls
   - coverage run --source=store -m pytest
+  - pylint ./store
 script:
   - pytest
 after:
   - covrealls
-  - pylint ./store
 
 service_name: travis-pro
 repo_token: New7B0MZdsYf5vo72SIvfsJqTC4gY4U0B
