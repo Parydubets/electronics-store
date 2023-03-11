@@ -1,5 +1,6 @@
 """ The app initialization file """
 import os
+import sys
 import logging
 import logging.handlers
 from flask import Flask, render_template
@@ -17,9 +18,11 @@ def create_app(test_config=None):
     db_password = os.environ.get('DB_PASSWORD')
     db_host = os.environ.get('DB_HOST')
     app = Flask(__name__, instance_relative_config=True)
+
     handler = logging.handlers.RotatingFileHandler('store.log', maxBytes=1024 * 1024)
     logging.getLogger('werkzeug').setLevel(logging.DEBUG)
     logging.getLogger('werkzeug').addHandler(handler)
+    logging.getLogger('werkzeug').addHandler(logging.StreamHandler(sys.stdout))
     app.config.from_mapping(
             SECRET_KEY='2O9VsppcnbkZkQrWklfUnw',
             #SQLALCHEMY_DATABASE_URI='mysql://root@127.0.0.1:3306/store',

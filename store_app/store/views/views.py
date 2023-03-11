@@ -51,6 +51,7 @@ def edit_client(id):
     client = get_item_with_filter(Client, Client.id, id)
     if client is None:
         flash("There's no product with id {}".format(id))
+        return redirect('/clients')
     else:
         form = CreateClientForm(first_name=client.first_name, last_name=client.last_name,\
                                 email=client.email, phone=client.phone)
