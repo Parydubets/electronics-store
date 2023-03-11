@@ -13,15 +13,17 @@ install:
   - mysql -e 'CREATE DATABASE store;'
   - cd store_app 
   - pip install .
-  - flask db upgrade
+  - flask db init
   - flask db migrate
   - flask db upgrade
   - flask seed
   - pip install coveralls
+  - coverage run --source=store -m pytest
 script:
-  - coverage run -m pytest
-after_script:
-  - coveralls
+  - pytest
+after:
+  - covrealls
+  - pylint ./store
 
 service_name: travis-pro
 repo_token: New7B0MZdsYf5vo72SIvfsJqTC4gY4U0B

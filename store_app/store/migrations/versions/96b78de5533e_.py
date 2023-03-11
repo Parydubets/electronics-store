@@ -27,6 +27,7 @@ def upgrade():
     sa.Column('date', sa.Date(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
+
     op.create_table('products',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=40), nullable=False),
@@ -36,6 +37,7 @@ def upgrade():
     sa.Column('amount', sa.Integer(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
+
     op.create_table('orders',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
@@ -45,6 +47,7 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['clients.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+
     op.create_table('link',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('order_id', sa.Integer(), nullable=True),
@@ -53,7 +56,6 @@ def upgrade():
     sa.ForeignKeyConstraint(['product_id'], ['products.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    # ### end Alembic commands ###
 
 
 def downgrade():

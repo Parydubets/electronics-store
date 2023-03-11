@@ -55,11 +55,12 @@ def get_products_list(filtration, **kwargs):
     return data
 
 def get_orders():
+    """ Get all orders """
     with current_app.app_context():
-
         return Order.query.all()
 
 def edit_item(item):
+    """ Edit item """
     db.session.add(item)
     db.session.commit()
     return True
@@ -75,12 +76,22 @@ def create_item(model):
     return 1
 
 def delete_item(item):
+    """ Delete item """
     db.session.delete(item)
     db.session.commit()
+
 
 def sum_of_orders():
     """ Returns sum of all orders price """
     result = db.session.query(
         func.sum(Order.cost)
     ).scalar()
+    return result
+
+
+def sum_of_client_orders(id):
+    """ Returns sum of client`s orders price """
+    result = db.session.query(
+        func.sum(Order.cost)
+    ).filter(Order.user_id==id).scalar()
     return result

@@ -1,10 +1,12 @@
+""" The ORM models file """
 from sqlalchemy import Column, Integer, String, Date, ForeignKey
+from sqlalchemy.orm import relationship
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import relationship, declarative_base
 
 db = SQLAlchemy()
 
 class Link(db.Model):
+    """ Table for many to many relationship """
     __tablename__ = 'link'
 
     id = Column(Integer, primary_key=True)
@@ -13,6 +15,7 @@ class Link(db.Model):
 
 
 class Client(db.Model):
+    """ The clients model """
     __tablename__ = 'clients'
 
     id = Column(Integer, primary_key=True)
@@ -26,6 +29,7 @@ class Client(db.Model):
 
 
 class Order(db.Model):
+    """ The orders model """
     __tablename__ = 'orders'
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('clients.id'))
@@ -36,6 +40,7 @@ class Order(db.Model):
 
 
 class Product(db.Model):
+    """ The products model """
     __tablename__ = 'products'
     id = Column(Integer, primary_key=True)
     name = Column(String(40), nullable=False)

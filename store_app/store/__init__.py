@@ -1,52 +1,48 @@
 """ The app initialization file """
 import os
-from flask import Flask, render_template
-from flask_migrate import Migrate
 import logging
 import logging.handlers
+from flask import Flask, render_template
+from flask_migrate import Migrate
+from .views import bp
+from .rest import api_bp
+from .models import db, Client, Product, Order
 
 
 def create_app(test_config=None):
-    " The store app creation "
+    """ The store app creation """
     app = Flask(__name__, instance_relative_config=True)
     handler = logging.handlers.RotatingFileHandler('store.log', maxBytes=1024 * 1024)
     logging.getLogger('werkzeug').setLevel(logging.DEBUG)
     logging.getLogger('werkzeug').addHandler(handler)
     app.config.from_mapping(
             SECRET_KEY='2O9VsppcnbkZkQrWklfUnw',
-            SQLALCHEMY_DATABASE_URI='mysql://root@127.0.0.1:3306/store',
-            #SQLALCHEMY_DATABASE_URI='mysql://root:admin@localhost:3306/store',
+            #SQLALCHEMY_DATABASE_URI='mysql://root@127.0.0.1:3306/store',
+            SQLALCHEMY_DATABASE_URI='mysql://root:admin@localhost:3306/store',
     )
 
     def set_test(test_config):
         if test_config is None:
-            # load the instance config, if it exists, when not testing
             app.config.from_pyfile("config.py", silent=True)
         else:
-            # load the test config if passed in
             app.config.update(test_config)
 
-            # ensure the instance folder exists
         try:
             os.makedirs(app.instance_path)
         except OSError:
             pass
 
     set_test(test_config)
-    from .views import bp
-    from .rest import api_bp
-    from .models import db, Client, Product, Order
-    from .service import get_clients_list
+
     db.init_app(app)
     app.register_blueprint(bp)
     app.register_blueprint(api_bp)
 
-    #app.register_blueprint(api)
     migrate = Migrate(app, db, directory='store/migrations')
 
     @app.cli.command('seed')
     def seed():
-         with app.app_context():
+        with app.app_context():
             client1=Client(first_name="Peter", last_name="Parker", email="spiderman@gmail.com",
                                    phone="+123456123450", date="2023-01-18")
             client2=Client(first_name="Joel", last_name="Miller", email="thelastjoel@gmail.com",
@@ -93,12 +89,3 @@ def create_app(test_config=None):
 
 
 #mysql://root:admin@localhost:3306/store
-
-""" ord_pr1 = order_product.insert().values(order_id=1, product_id=1)
- ord_pr2 = order_product.insert().values(order_id=1, product_id=2)
- ord_pr3 = order_product.insert().values(order_id=2, product_id=3)
- ord_pr4 = order_product.insert().values(order_id=3, product_id=1)
- db.session.execute(ord_pr1)
- db.session.execute(ord_pr2)
- db.session.execute(ord_pr3)
- db.session.execute(ord_pr4)"""

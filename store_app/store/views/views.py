@@ -15,7 +15,7 @@ def clients():
     date_from = request.args.get('date_from')
     date_to = request.args.get('date_to')
     print(sum_of_orders())
-    if date_from != None and date_to != None:
+    if date_from is not None and date_to is not None:
         data = get_clients_list(True, date_from=date_from, date_to=date_to)
         if data == []:
             flash("No rows found")
@@ -40,7 +40,7 @@ def new_client():
                 flash("Phone number already in use")
             else:
                 edit_item(Client(first_name=form.first_name.data, last_name=form.last_name.data,
-                                      email=form.email.data, phone=form.phone.data, date=date.today()))
+                                email=form.email.data, phone=form.phone.data, date=date.today()))
                 return redirect('/clients')
     return render_template('bp/manipulate_client.html', page='client', form=form)
 
@@ -49,10 +49,11 @@ def new_client():
 def edit_client(id):
     """ Product creation page """
     client = get_item_with_filter(Client, Client.id, id)
-    if client == None:
+    if client is None:
         flash("There's no product with id {}".format(id))
     else:
-        form = CreateClientForm(first_name=client.first_name, last_name=client.last_name, email=client.email, phone=client.phone)
+        form = CreateClientForm(first_name=client.first_name, last_name=client.last_name,\
+                                email=client.email, phone=client.phone)
         if form.cancel.data:
             return redirect('/clients')
         else:
@@ -69,13 +70,14 @@ def edit_client(id):
 
 @bp.route('/delete_client/<int:id>', methods=['GET', 'POST'])
 def delete_client(id):
+    """ Delete confirm page """
     form = DeleteItem()
     if form.cancel.data:
         return redirect('/orders')
     else:
         if form.validate_on_submit():
             client = get_item_with_filter(Client, Client.id, id)
-            if client == None:
+            if client is None:
                 flash("There's no client with id {}".format(id))
                 return redirect('/clients')
             delete_item(client)
@@ -90,7 +92,7 @@ def orders():
     items=[]
     date_from = request.args.get('date_from')
     date_to = request.args.get('date_to')
-    if date_from != None and date_to != None:
+    if date_from is not None and date_to is not None:
         data, order = get_orders_list(True, date_from=date_from, date_to=date_to)
         if data == []:
             flash("No rows found")
@@ -132,7 +134,7 @@ def new_order():
                         product = get_item_with_filter(Product, Product.name, item)
                         validate_order(item, product)
 
-                    if available == True:
+                    if available is True:
                         order = Order(date=form.date.data, user_id=client.id, cost=cost,
                                               address=form.address.data, products=items)
 
@@ -153,21 +155,21 @@ def new_order():
 def edit_order(id):
     """ Product creation page """
     order = get_item_with_filter(Order, Order.id, id)
-    if order == None:
+    if order is None:
         flash("There's no order with id {}".format(id))
         return redirect('/orders')
     client = get_item_with_filter(Client, Client.id, order.user_id)
 
-    if client == None:
+    if client is None:
         flash("There's no client with id {}".format(id))
         return redirect('/orders')
     items = [i.name for i in order.products]
     items = ', '.join(items)
-    if order == None:
+    if order is None:
         flash("There's no product with id {}".format(id))
     else:
-        form = CreateOrderForm(name=client.first_name+" "+client.last_name, phone=client.phone, order=items, address=order.address,
-                                 date=order.date, )
+        form = CreateOrderForm(name=client.first_name+" "+client.last_name, phone=client.phone,\
+                               order=items, address=order.address, date=order.date)
         if form.cancel.data:
             return redirect('/orders')
         else:
@@ -180,7 +182,6 @@ def edit_order(id):
 
                 client = get_item_with_filter(Client, Client.phone, phone)
                 if client:
-                    cost = 0
                     checked=[]
                     if name[0] == client.first_name and name[1] == client.last_name:
                         available = True
@@ -190,13 +191,14 @@ def edit_order(id):
                             product = get_item_with_filter(Product, Product.name, item)
                             available = validate_order(item, product)
 
-                        if available == True:
+                        if available is True:
                             order.cost=0
                             order.products=[]
                             for item in checked:
                                 buf = get_item_with_filter(Product, Product.name, item)
                                 order.cost+=buf.cost
                                 order.products.append(buf)
+                            order.date=form.date.data
                             edit_item(order)
 
                         else:
@@ -209,13 +211,14 @@ def edit_order(id):
 
 @bp.route('/delete_order/<int:id>', methods=['GET', 'POST'])
 def delete_order(id):
+    """ The delete order confirm """
     form = DeleteItem()
     if form.cancel.data:
         return redirect('/orders')
     else:
         if form.validate_on_submit():
             order = get_item_with_filter(Order, Order.id, id)
-            if order == None:
+            if order is None:
                 flash("There's no order with id {}".format(id))
                 return redirect('/orders')
             delete_item(order)
@@ -229,7 +232,7 @@ def products():
     form = Filters()
     price_from = request.args.get('price_from')
     price_to = request.args.get('price_to')
-    if price_from != None and price_to != None:
+    if price_from is not None and price_to is not None:
         data = get_products_list(True, price_from=price_from, price_to=price_to)
         if data == []:
             flash("No rows found")
@@ -252,8 +255,9 @@ def new_product():
             cost=form.cost.data
             amount = form.amount.data
             product_in_db = get_item_with_filter(Product, Product.name, name)
-            if product_in_db == None:
-                create_item(Product(name=name, category=category, cost=cost, amount=amount, year=year))
+            if product_in_db is None:
+                create_item(Product(name=name, category=category, cost=cost,\
+                                    amount=amount, year=year))
                 return redirect('/products')
             else:
                 flash("A product with this name already exists")
@@ -264,11 +268,12 @@ def new_product():
 def edit_product(id):
     """ Product creation page """
     product = get_item_with_filter(Product, Product.id, id)
-    if product == None:
+    if product is None:
         flash("There's no product with id {}".format(id))
         return redirect('/products')
     else:
-        form = CreateProductForm(name=product.name, category=product.category, year=product.year, cost=product.cost, amount=product.amount,)
+        form = CreateProductForm(name=product.name, category=product.category,\
+                                 year=product.year, cost=product.cost, amount=product.amount,)
         if form.cancel.data:
             return redirect('/clients')
         else:
@@ -292,17 +297,12 @@ def delete_product(id):
     else:
         if form.validate_on_submit():
             product = get_item_with_filter(Product, Product.id, id)
-            if product == None:
+            if product is None:
                 flash("There's no product with id {}".format(id))
                 return redirect('/products')
             delete_item(product)
             return redirect('/products')
     return  render_template('bp/delete_item.html', type="new", form=form, item = "product", id = id)
-
-
-@bp.errorhandler(404)
-def page_not_found():
-    return render_template('page_not_found.html',type="new"), 404
 
 
 def validate_order(item, product):

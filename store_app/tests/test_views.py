@@ -32,6 +32,8 @@ def test_edit_client_route(client):
     response = client.get('/edit_client/1')
     print(response.status_code)
     assert response.status_code == 200
+    response = client.get('/edit_client/n')
+
 
 
 def test_orders_route(client):
