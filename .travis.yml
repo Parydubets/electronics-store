@@ -5,9 +5,6 @@ python:
 
 services:
   - mysql
-  
-env: 
-  - FLASK_APP="store"
    
 install: 
   - mysql -e 'CREATE DATABASE store;'
