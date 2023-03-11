@@ -38,5 +38,6 @@ setup(
         "SQLAlchemy-Utils==0.40.0",
         "flask_restful",
         "pylint",
+        "grep",
     ],
 )
