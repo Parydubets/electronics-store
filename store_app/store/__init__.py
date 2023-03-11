@@ -17,8 +17,8 @@ def create_app(test_config=None):
     logging.getLogger('werkzeug').addHandler(handler)
     app.config.from_mapping(
             SECRET_KEY='2O9VsppcnbkZkQrWklfUnw',
-            #SQLALCHEMY_DATABASE_URI='mysql://root@127.0.0.1:3306/store',
-            SQLALCHEMY_DATABASE_URI='mysql://root:admin@localhost:3306/store',
+            SQLALCHEMY_DATABASE_URI='mysql://root@127.0.0.1:3306/store',
+            #SQLALCHEMY_DATABASE_URI='mysql://root:admin@localhost:3306/store',
     )
 
     def set_test(test_config):
