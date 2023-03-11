@@ -28,13 +28,10 @@ def test_new_client_route(client):
 
 def test_edit_client_route(client):
     response = client.get('/edit_client')
-    print(response.status_code)
     assert response.status_code == 404
     response = client.get('/edit_client/1')
     assert response.status_code == 200
     response = client.get(('/edit_client/999'), follow_redirects=True)
-    print("response",response.request.path)
-    print("get", '/clients')
     assert response.request.path == '/clients'
 
 def test_orders_route(client):
@@ -52,6 +49,8 @@ def test_edit_order_route(client):
     assert response.status_code == 404
     response = client.get('/edit_order/1')
     assert response.status_code == 200
+    response = client.get(('/edit_order/999'), follow_redirects=True)
+    assert response.request.path == '/orders'
 
 
 def test_products_route(client):
@@ -69,6 +68,8 @@ def test_edit_product_route(client):
     assert response.status_code == 404
     response = client.get('/edit_client/1')
     assert response.status_code == 200
+    response = client.get(('/edit_client/999'), follow_redirects=True)
+    assert response.request.path == '/clients'
 
 def test_random_route(client):
     response = client.get('/vfdvdf')
