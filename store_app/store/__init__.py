@@ -12,14 +12,20 @@ from .models import db, Client, Product, Order
 
 def create_app(test_config=None):
     """ The store app creation """
+    db_user = os.environ.get('DB_USER')
+    db_user = str(db_user) + ':'
+    db_password = os.environ.get('DB_PASSWORD')
+    db_host = os.environ.get('DB_HOST')
     app = Flask(__name__, instance_relative_config=True)
     handler = logging.handlers.RotatingFileHandler('store.log', maxBytes=1024 * 1024)
     logging.getLogger('werkzeug').setLevel(logging.DEBUG)
     logging.getLogger('werkzeug').addHandler(handler)
     app.config.from_mapping(
             SECRET_KEY='2O9VsppcnbkZkQrWklfUnw',
-            SQLALCHEMY_DATABASE_URI='mysql://root@127.0.0.1:3306/store',
+            #SQLALCHEMY_DATABASE_URI='mysql://root@127.0.0.1:3306/store',
             #SQLALCHEMY_DATABASE_URI='mysql://root:admin@localhost:3306/store',
+            SQLALCHEMY_DATABASE_URI=f'mysql://{db_user}{db_password}@{db_host}/store',
+
     )
 
     def set_test(test_config):

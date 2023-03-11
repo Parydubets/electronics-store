@@ -4,9 +4,11 @@ import os
 
 def test_db_cnnection():
     db_user = os.environ.get('DB_USER')
+    db_user = str(db_user)+':'
     db_password = os.environ.get('DB_PASSWORD')
     db_host = os.environ.get('DB_HOST')
-    print(db_user, db_password, db_host)
-    #assert database_exists('mysql://{}:{}@{}/store'.format(db_user,db_password,db_host))
+    if db_password is '':
+        db_user=db_user[0:-1]
+    assert database_exists('mysql://{}{}@{}/store'.format(db_user,db_password,db_host))
     #assert database_exists('mysql://root:admin@localhost:3306/store')
-    assert database_exists('mysql://root@127.0.0.1:3306/store')
+    #assert database_exists('mysql://root@127.0.0.1:3306/store')
