@@ -5,9 +5,9 @@
 
 """
 
-from flask import current_app#, jsonify
+from flask import current_app
 from sqlalchemy.sql import func
-from ..models import db, Client, Order, Product, Base
+from ..models import db, Client, Order, Product
 
 def get_clients_list(filtration, **kwargs):
     """ Returns list of clients and amount of orders """
@@ -17,7 +17,6 @@ def get_clients_list(filtration, **kwargs):
                 .filter(Client.date <= kwargs['date_to']).all()
         else:
             data = Client.query.all()
-            print(data)
     return data
 
 
@@ -51,13 +50,11 @@ def get_products_list(filtration, **kwargs):
         if filtration is True:
             data = Product.query.filter(Product.cost >= kwargs['price_from'])\
                 .filter(Product.cost <= kwargs['price_to']).all()
-            print(Product.query.filter(Product.cost >= kwargs['price_from']).all(),\
-                  kwargs['price_from'], kwargs['price_to'])
         else:
             data = Product.query.all()
     return data
 
-def get_products():
+def get_orders():
     with current_app.app_context():
 
         return Order.query.all()

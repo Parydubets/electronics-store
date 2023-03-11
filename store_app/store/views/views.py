@@ -1,11 +1,8 @@
 """ This is the main routes module """
-from flask import render_template, url_for, Blueprint, redirect, flash, request
+from flask import render_template, Blueprint, redirect, flash, request
 from datetime import date
-from ..models import Client, Order, db
 from ..service import *
-#from ..rest import api
 from ..forms import CreateClientForm, CreateOrderForm, CreateProductForm, DeleteItem, Filters
-from sqlalchemy import update
 
 bp = Blueprint('bp', __name__, template_folder="bp")
 
@@ -19,7 +16,7 @@ def clients():
     date_to = request.args.get('date_to')
     print(sum_of_orders())
     if date_from != None and date_to != None:
-        data, orders = get_clients_list(True, date_from=date_from, date_to=date_to)
+        data = get_clients_list(True, date_from=date_from, date_to=date_to)
         if data == []:
             flash("No rows found")
     else:
@@ -78,7 +75,9 @@ def delete_client(id):
     else:
         if form.validate_on_submit():
             client = get_item_with_filter(Client, Client.id, id)
-            print(client)
+            if client == None:
+                flash("There's no client with id {}".format(id))
+                return redirect('/clients')
             delete_item(client)
             return redirect('/clients')
     return  render_template('bp/delete_item.html', type="new", form=form, item = "client", id = id)
@@ -91,7 +90,6 @@ def orders():
     items=[]
     date_from = request.args.get('date_from')
     date_to = request.args.get('date_to')
-    print("date range: ", date_from, date_to)
     if date_from != None and date_to != None:
         data, order = get_orders_list(True, date_from=date_from, date_to=date_to)
         if data == []:
@@ -101,8 +99,6 @@ def orders():
 
     for item in order:
         items.append(', '.join(item))
-        #items = ' '.join([str(elem) for elem in item])
-    print("items: ",items)
     return render_template('bp/orders.html', page='order', data=data, len=len(data), order=items, form=form)
 
 
@@ -125,6 +121,7 @@ def new_order():
                 if len(order_list) != len(set(order_list)):
                     flash("You can order only 1 unit per product")
                     available=False
+
                 cost = 0
                 items=[]
                 checked = []
@@ -141,7 +138,6 @@ def new_order():
 
                         for item in checked:
                             buf = get_item_with_filter(Product, Product.name, item)
-
                             order.cost += buf.cost
                             order.products.append(buf)
                             buf.amount-=1
@@ -157,7 +153,14 @@ def new_order():
 def edit_order(id):
     """ Product creation page """
     order = get_item_with_filter(Order, Order.id, id)
+    if order == None:
+        flash("There's no order with id {}".format(id))
+        return redirect('/orders')
     client = get_item_with_filter(Client, Client.id, order.user_id)
+
+    if client == None:
+        flash("There's no client with id {}".format(id))
+        return redirect('/orders')
     items = [i.name for i in order.products]
     items = ', '.join(items)
     if order == None:
@@ -174,31 +177,28 @@ def edit_order(id):
                 order_list = form.order.data.split(", ")
                 if len(order_list) != len(set(order_list)):
                     flash("You can order only 1 unit per product")
+
                 client = get_item_with_filter(Client, Client.phone, phone)
                 if client:
                     cost = 0
                     checked=[]
                     if name[0] == client.first_name and name[1] == client.last_name:
                         available = True
-                        print("halo", order_list)
+
                         for item in order_list:
                             checked.append(item)
                             product = get_item_with_filter(Product, Product.name, item)
                             available = validate_order(item, product)
-                            print(item, checked, available)
+
                         if available == True:
                             order.cost=0
                             order.products=[]
-                            print("available")
                             for item in checked:
-                                print("checked")
                                 buf = get_item_with_filter(Product, Product.name, item)
                                 order.cost+=buf.cost
                                 order.products.append(buf)
-                                print("product: ", buf.name,buf.cost)
-                                print("order: ", order.products,order.cost)
-
                             edit_item(order)
+
                         else:
                             return redirect('/edit_order/'+str(id))
                         return redirect('/orders')
@@ -215,6 +215,9 @@ def delete_order(id):
     else:
         if form.validate_on_submit():
             order = get_item_with_filter(Order, Order.id, id)
+            if order == None:
+                flash("There's no order with id {}".format(id))
+                return redirect('/orders')
             delete_item(order)
             return redirect('/orders')
     return  render_template('bp/delete_item.html', type="new", form=form, item = "order", id = id)
@@ -263,6 +266,7 @@ def edit_product(id):
     product = get_item_with_filter(Product, Product.id, id)
     if product == None:
         flash("There's no product with id {}".format(id))
+        return redirect('/products')
     else:
         form = CreateProductForm(name=product.name, category=product.category, year=product.year, cost=product.cost, amount=product.amount,)
         if form.cancel.data:
@@ -288,6 +292,9 @@ def delete_product(id):
     else:
         if form.validate_on_submit():
             product = get_item_with_filter(Product, Product.id, id)
+            if product == None:
+                flash("There's no product with id {}".format(id))
+                return redirect('/products')
             delete_item(product)
             return redirect('/products')
     return  render_template('bp/delete_item.html', type="new", form=form, item = "product", id = id)
@@ -296,6 +303,7 @@ def delete_product(id):
 @bp.errorhandler(404)
 def page_not_found():
     return render_template('page_not_found.html',type="new"), 404
+
 
 def validate_order(item, product):
     if item not in product.name:

@@ -1,10 +1,9 @@
-from sqlalchemy import Column, Integer, String, Date, ForeignKey, Table
+from sqlalchemy import Column, Integer, String, Date, ForeignKey
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship, declarative_base
 
 db = SQLAlchemy()
 
-Base = declarative_base()
 class Link(db.Model):
     __tablename__ = 'link'
 
