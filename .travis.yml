@@ -20,7 +20,7 @@ install:
   - pylint ./store | grep rated
 script:
   - coverage run -m pytest
-after:
+after_script:
   - covrealls
 
 service_name: travis-pro
