@@ -19,6 +19,7 @@ install:
   - flask seed
   - pip install coveralls
   - coverage run --source=store -m pytest
+  - python ./store/pylint-run
 script:
   - pytest
 after:

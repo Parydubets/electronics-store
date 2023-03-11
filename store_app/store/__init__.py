@@ -9,6 +9,7 @@ from .rest import api_bp
 from .models import db, Client, Product, Order
 
 
+
 def create_app(test_config=None):
     """ The store app creation """
     app = Flask(__name__, instance_relative_config=True)
