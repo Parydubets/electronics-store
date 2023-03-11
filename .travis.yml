@@ -17,7 +17,6 @@ install:
   - flask db migrate
   - flask db upgrade
   - flask seed
-  - cd ..
   - pip install coveralls
 script:
   - coverage run -m pytest
