@@ -4,7 +4,10 @@ from setuptools import setup, find_packages
 import os
 
 
-os.system("export FLASK_APP=store")
+os.system("flask db upgrade")
+os.system("flask db migrate")
+os.system("flask db upgrade")
+os.system("flask seed")
 
 setup(
     name='store',
