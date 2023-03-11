@@ -37,5 +37,6 @@ setup(
         "email-validator==1.3.1",
         "SQLAlchemy-Utils==0.40.0",
         "flask_restful",
+        "pylint",
     ],
 )
