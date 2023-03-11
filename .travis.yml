@@ -17,6 +17,7 @@ install:
   - flask db migrate
   - flask db upgrade
   - flask seed
+  - pip install coveralls
   - pylint ./store | grep rated
 script:
   - coverage run -m pytest
