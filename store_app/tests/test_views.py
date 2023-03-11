@@ -1,3 +1,4 @@
+from flask  import request, url_for
 from store import create_app
 from store.views import *
 
@@ -30,10 +31,11 @@ def test_edit_client_route(client):
     print(response.status_code)
     assert response.status_code == 404
     response = client.get('/edit_client/1')
-    print(response.status_code)
     assert response.status_code == 200
-    response = client.get('/edit_client/n')
-
+    response = client.get(('/edit_client/999'), follow_redirects=True)
+    print("response",response.request.path)
+    print("get", '/clients')
+    assert response.request.path == '/clients'
 
 def test_orders_route(client):
     response = client.get('/orders')
