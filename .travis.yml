@@ -7,7 +7,7 @@ services:
   - mysql
   
 env: 
-  - FLASK_APP="store"
+  - FLASK_APP="store", DB_USER="root", DB_PASSWORD="", DB_HOST="127.0.0.1:3306"
   - DB_USER="root"
   - DB_PASSWORD=""
   - DB_HOST="127.0.0.1:3306"
