@@ -31,10 +31,10 @@ class ClientsList(Resource):
                                    email=email, phone=phone, date=date))
             else:
                 return "Client with this email exists", 400
-        elif len(phone) > 13 or len(phone) < 13:
-            return "Wrong number lenght", 400
-        else:
+        elif get_items_with_filter(Client, Client.phone, phone):
             return "Client with this phone exists", 400
+        else:
+            return "Wrong number lenght", 400
         return "You`ve added a client", 201
 
 class Clients(Resource):
@@ -81,6 +81,8 @@ class Clients(Resource):
                     return 'Invalid phone number', 400
                 client.phone = phone
             elif item == 'email':
+                if get_items_with_filter(Client, Client.email, request.form['email']):
+                    return 'Client with this email already exists', 400
                 client.email = request.form['email']
         edit_item(client)
         result = client_schema.dump(client)
@@ -147,7 +149,7 @@ class OrdersList(Resource):
                 for item in order_list:
                     checked.append(item)
                     product = get_item_with_filter(Product, Product.name, item)
-                    if item not in product.name:
+                    if product is None:
                         return "No product with name {}", 400
                     elif product.amount < 1:
                         return "You`ve ordered too much or {} is out of stock", 400
@@ -175,11 +177,11 @@ class Orders(Resource):
         Returns:
             Message, status code
         """
-        order = get_item_with_filter(Client, Client.id, id)
+        order = get_item_with_filter(Order, Order.id, id)
         if order is None:
             return "No order with this id", 400
         result = order_schema.dump(order)
-        return jsonify(result)
+        return result, 200
     def put(self, id):
         """
         Edit order by id

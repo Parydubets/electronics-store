@@ -65,7 +65,7 @@ def edit_client(id):
                     client.phone=form.phone.data
                     edit_item(client)
                     return redirect('/clients')
-    return render_template('bp/manipulate_client.html', page='product', form=form)
+    return render_template('bp/manipulate_client.html', page='client', form=form)
 
 
 @bp.route('/delete_client/<int:id>', methods=['GET', 'POST'])
