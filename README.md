@@ -62,37 +62,37 @@ The project will be accesseble on http://127.0.0.1:8000/
 ## API
 
 This project have a branch of api available:
-- http://127.0.0.1:5000/api/clients_list
+- http://127.0.0.1:5000/api/clients_list __
  GET request: Returns list of clients
  POST request: Creates new client on POST request
-- http://127.0.0.1:5000/api/client/<id>
+- http://127.0.0.1:5000/api/client/<id>__
  GET request: Returns client's information by client id
  PUT request: Edits client by id
  DELETE request: Deletes client by id
 
 
-- http://127.0.0.1:5000/api/orders_list
- GET request: Returns list of orders | 
+- http://127.0.0.1:5000/api/orders_list __
+ GET request: Returns list of orders__
  POST request: Creates new order on POST request
-- http://127.0.0.1:5000/api/order/<id>
-GET request: Returns order information by order id | 
-PUT request: Edits order by id | 
+- http://127.0.0.1:5000/api/order/<id> __
+GET request: Returns order information by order id__
+PUT request: Edits order by id__
 DELETE request: Deletes order by id
 
 
-- http://127.0.0.1:5000/api/products_list
- GET request: Returns list of products | 
+- http://127.0.0.1:5000/api/products_list __
+ GET request: Returns list of products__
  POST request: Creates new product on POST request
 - http://127.0.0.1:5000/api/product/<id>
- GET request: Returns product information by product id | 
- PUT request: Edits product by id | 
+ GET request: Returns product information by product id__
+ PUT request: Edits product by id__
  DELETE request: Deletes product by id
 
 
-- http://127.0.0.1:5000/api/orders_list/client/<id>
+- http://127.0.0.1:5000/api/orders_list/client/<id> __
  GET request: Returns list of orders by client`s id
-- http://127.0.0.1:5000/api/orders/sum
+- http://127.0.0.1:5000/api/orders/sum __
  GET request: Returns sum of all saved orders
-- http://127.0.0.1:5000/api/client/<id>/sum
+- http://127.0.0.1:5000/api/client/<id>/sum __
  GET request: Returns sum of all orders by client id
 
