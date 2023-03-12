@@ -20,14 +20,12 @@ def create_app(test_config=None):
 
     app = Flask(__name__, instance_relative_config=True)
     try:
-        if os.environ['DB_HOST']:
-            print("The value of", 'DB_HOST', " is ", os.environ['DB_HOST'])
-        if os.environ['DB_USER']:
-            print("The value of", 'DB_USER', " is ", os.environ['DB_USER'])
-        # Raise error if the variable is not set
+        if os.environ['DB_HOST']=='':
+            raise KeyError
+        if os.environ['DB_USER'] == '':
+            raise KeyError
     except KeyError:
         print('some environment variables are not set.')
-        # Terminate from the script
         sys.exit(1)
     handler = logging.handlers.RotatingFileHandler('store.log', maxBytes=1024 * 1024)
     logging.getLogger('werkzeug').setLevel(logging.DEBUG)

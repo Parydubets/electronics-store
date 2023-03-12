@@ -14,7 +14,6 @@ def clients():
     form = Filters()
     date_from = request.args.get('date_from')
     date_to = request.args.get('date_to')
-    print(sum_of_orders())
     if date_from is not None and date_to is not None:
         data = get_clients_list(True, date_from=date_from, date_to=date_to)
         if data == []:
@@ -66,7 +65,7 @@ def edit_client(id):
                     client.phone=form.phone.data
                     edit_item(client)
                     return redirect('/clients')
-    return render_template('bp/manipulate_client.html', page='product', form=form)
+    return render_template('bp/manipulate_client.html', page='client', form=form)
 
 
 @bp.route('/delete_client/<int:id>', methods=['GET', 'POST'])
@@ -74,7 +73,7 @@ def delete_client(id):
     """ Delete confirm page """
     form = DeleteItem()
     if form.cancel.data:
-        return redirect('/orders')
+        return redirect('/clients')
     else:
         if form.validate_on_submit():
             client = get_item_with_filter(Client, Client.id, id)
