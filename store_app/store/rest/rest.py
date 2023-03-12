@@ -140,21 +140,21 @@ class OrdersList(Resource):
         if client and client.first_name + ' ' + client.last_name == full_name:
             name = full_name.split(" ")
             order_list = positions.split(", ")
-            if len(order_list) != len(set(order_list)):
+            if len(order_list) > len(set(order_list)):
                 return ("You can order only 1 unit per product"), 400
             cost = 0
-            items = []
             checked = []
             if name[0] == client.first_name and name[1] == client.last_name:
                 for item in order_list:
                     checked.append(item)
                     product = get_item_with_filter(Product, Product.name, item)
                     if product is None:
-                        return "No product with name {}", 400
+                        return f"No product with name {item}", 400
                     elif product.amount < 1:
-                        return "You`ve ordered too much or {} is out of stock", 400
+                        return f"You`ve ordered too much or {item} is out of stock", 400
+
                 order = Order(date=request.form['date'], user_id=client.id, cost=cost,
-                                  address=request.form['address'], products=items)
+                                  address=request.form['address'], products=[])
                 for item in checked:
                     buf = get_item_with_filter(Product, Product.name, item)
                     order.cost += buf.cost
@@ -198,37 +198,38 @@ class Orders(Resource):
         """
         order = get_item_with_filter(Order, Order.id, id)
         if order is None:
-            return f"There's no product with id {id}", 400
+            return f"There's no order with id {id}", 400
         else:
-            name = request.form['full_name'].split(" ")
-            phone = request.form['phone']
-            order_list = request.form['order'].split(", ")
-            if len(order_list) != len(set(order_list)):
-                return "You can order only 1 unit per product", 400
-            client = get_item_with_filter(Client, Client.phone, phone)
-            if client is None:
-                return "No client with this data", 400
-            else:
-                checked = []
-                if name[0] == client.first_name and name[1] == client.last_name:
-                    for item in order_list:
-                        checked.append(item)
-                        product = get_item_with_filter(Product, Product.name, item)
-                        if item not in product.name:
-                            return f"No product with name {product.name}", 400
+            client = get_item_with_filter(Client, Client.phone, order.user_id)
+            for item in request.form.keys():
+                if item == 'phone':
+                    return 'You can`t change phone', 400
+                if item == 'full_name':
+                    return 'You can`t change name', 400
+                if item == 'order':
+                    order.products=[]
+                    products = request.form['order']
+                    products = products.split(', ')
+                    if ( len(products) > len(set(products))):
+                        return ("You can order only 1 unit per product"), 400
+                    for i in products:
+                        product = get_item_with_filter(Product, Product.name, i)
+                        if product is None:
+                            return f"No product with this name ", 400
                         elif product.amount < 1:
                             return f"You`ve ordered too much or {product.name} is out of stock", 400
-                    order.cost = 0
-                    order.products = []
-                    for item in checked:
-                        buf = get_item_with_filter(Product, Product.name, item)
-                        order.cost += buf.cost
-                        order.products.append(buf)
+                        product.amount-=1
+                        edit_item(product)
+                        order.products.append(product)
+                if item == 'date':
                     order.date = request.form['date']
                     edit_item(order)
-                    return "Edited successfully", 200
-                else:
-                    return "No client with this data", 400
+                if item == 'address':
+                    order.address = request.form['address']
+                    edit_item(order)
+
+                return "Edited successfully", 200
+
     def delete(self, id):
         """ Delete client by id """
         order = get_item_with_filter(Order, Order.id, id)

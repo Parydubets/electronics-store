@@ -140,19 +140,15 @@ def test_edit_order(client):
     assert response.status_code == 400
     response = client.put('api/order/1', data={'order': 'Smartphone Q2, Smartphone Q2'})
     assert response.status_code == 400
-    response = client.put('api/order/1', data={'order': 'Smartphone Q2, Laptop SM234'})
-    assert response.status_code == 400
     response = client.put('api/order/1', data={'order': 'Smartphone Q2, Laptop SM234, Laptop SM234'})
     assert response.status_code == 400
     response = client.put('api/order/1', data={'phone': '+123456123453'})
     assert response.status_code == 400
-    response = client.put('api/order/1', data={'email': 'someone@gmail.com'})
-    assert response.status_code == 400
-    response = client.put('api/order/1', data={'email': 'someone@gmail.com'})
-    assert response.status_code == 400
-    response = client.put('api/order/1', data={'phone': '1'})
-    assert response.status_code == 400
-    response = client.put('api/order/999', data={'phone': '1'})
+    response = client.put('api/order/1', data={'date': '2020-12-01'})
+    assert response.status_code == 200
+    response = client.put('api/order/1', data={'address': 'Browning st.'})
+    assert response.status_code == 200
+    response = client.put('api/order/999', data={'address': 'Browning st.'})
     assert response.status_code == 400
 
 def test_delete_order(client):

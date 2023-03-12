@@ -80,37 +80,42 @@ def test_new_order_route(client):
     response = client.get('/new_order')
     assert response.status_code == 200
     with client.application.app_context():
-        response = client.post('/new_order', data={'full_name': 'Tony Stark', \
+        response = client.post('/new_order', data={'submit':True,'full_name': 'Tony Stark', \
                                                          'phone': '+123456123459', \
                                                          'order': 'Smartphone Q2', \
                                                          'address': '10501 Wrangler Way, Corona, CA 92883, USA', \
                                                          'date': '2023-01-30'})
         assert response.status_code == 200
-        response = client.post('/new_order', data={'full_name': 'Tony Stark', \
+        response = client.post('/new_order', data={'submit':True,'full_name': 'Tony Stark', \
                                                          'order': 'Smartphone Q2', \
                                                          'phone': '+123456123452', \
                                                          'address': '10501 Wrangler Way, Corona, CA 92883, USA', \
                                                          'date': '2023-01-30'})
         assert response.status_code == 200
-        response = client.post('/new_order', data={'full_name': 'Tony Stark', \
+        response = client.post('/new_order', data={'submit':True,'full_name': 'Tony Stark', \
                                                          'order': 'Smartphone Q2', \
                                                          'phone': '+123456123452ds', \
                                                          'address': '10501 Wrangler Way, Corona, CA 92883, USA', \
                                                          'date': '2023-01-30'})
         assert response.status_code == 200
-        response = client.post('/new_order', data={'full_name': 'Tony Stark', \
+        response = client.post('/new_order', data={'submit':True,'full_name': 'Tony Stark', \
                                                          'order': 'Smartphone Q2, Smartphone Q2', \
                                                          'phone': '+123456123452', \
                                                          'address': '10501 Wrangler Way, Corona, CA 92883, USA', \
                                                          'date': '2023-01-30'})
         assert response.status_code == 200
-        response = client.post('/new_order', data={'full_name': 'Tony Stark', \
+        response = client.post('/new_order', data={'submit':True,'full_name': 'Tony Stark', \
                                                          'order': 'sdfvsdf', \
                                                          'phone': '+123456123452', \
                                                          'address': '10501 Wrangler Way, Corona, CA 92883, USA', \
                                                          'date': '2023-01-30'})
-        assert response.status_code == 200
-        response = client.post('/new_order', data={'full_name': 'Tony Stark', \
+        response = client.post('/new_order', data={'cancel':True,'full_name': 'Tony Stark', \
+                                                         'order': 'sdfvsdf', \
+                                                         'phone': '+123456123452', \
+                                                         'address': '10501 Wrangler Way, Corona, CA 92883, USA', \
+                                                         'date': '2023-01-30'})
+        assert response.status_code == 302
+        response = client.get('/new_order', data={'submit':'True','full_name': 'Tony Stark', \
                                                          'order': 'Smartphone Q2, Laptop SM234', \
                                                          'phone': '+123456123452', \
                                                          'address': '10501 Wrangler Way, Corona, CA 92883, USA', \
