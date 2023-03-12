@@ -13,6 +13,8 @@ def test_clients_route(client):
     assert response.status_code == 200
     response = client.get('/clients')
     assert response.status_code == 200
+    response = client.get('/orders?date_from=2022-12-31&date_to=2023-03-12&refresh=Filter')
+    assert response.status_code == 200
 
 def test_new_client_route(client):
     response = client.get('/new_client')

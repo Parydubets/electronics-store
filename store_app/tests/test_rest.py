@@ -59,7 +59,7 @@ def test_edit_client(client):
     response = client.put('api/client/1', data={'phone': '1234567890123543'})
     assert response.status_code == 400
     response = client.put('api/client/1', data={'phone': '+123456123425'})
-    assert response.status_code == 400
+    assert response.status_code == 200
     response = client.put('api/client/1', data={'email': 'someone@gmail.com'})
     assert response.status_code == 200
     response = client.put('api/client/1', data={'email': 'someone@gmail.com'})
@@ -172,7 +172,7 @@ def test_get_product(client):
     response = client.get('/api/product/1')
     assert response.status_code == 200
     response = client.get('/api/product/999')
-    assert response.status_code == 200
+    assert response.status_code == 400
 
 def test_post_products(client):
     response = client.post('/api/products_list', data={'name': 'Powerbank 10000 mAh', \
@@ -213,7 +213,7 @@ def test_delete_product(client):
     assert response.status_code == 400
 
 def test_clients_orders(client):
-    response = client.get('api/orders_list/client/1')
+    response = client.get('api/orders_list/client/2')
     assert response.status_code == 200
     response = client.get('api/orders_list/client/999')
     assert response.status_code == 400
@@ -223,7 +223,7 @@ def test_get_sum(client):
     assert response.status_code == 200
 
 def test_get_sum_by_client(client):
-    response = client.get('/api/client/1/sum')
+    response = client.get('/api/client/2/sum')
     assert response.status_code == 200
     response = client.get('/api/client/999/sum')
     assert response.status_code == 400

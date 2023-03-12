@@ -26,6 +26,8 @@ class ClientsList(Resource):
         phone = request.form['phone']
         date = request.form['date']
         if not get_items_with_filter(Client, Client.phone, phone):
+            if len(phone)>13 or len(phone)<13:
+                return "Wrong number lenght", 400
             if not get_items_with_filter(Client, Client.email, email):
                 create_item(Client(first_name=first_name, last_name=last_name,\
                                    email=email, phone=phone, date=date))
@@ -33,8 +35,6 @@ class ClientsList(Resource):
                 return "Client with this email exists", 400
         elif get_items_with_filter(Client, Client.phone, phone):
             return "Client with this phone exists", 400
-        else:
-            return "Wrong number lenght", 400
         return "You`ve added a client", 201
 
 class Clients(Resource):
@@ -249,8 +249,11 @@ class ClientsOrders(Resource):
     """
     def get(self, id):
         orders = get_items_with_filter(Order, Order.user_id, id)
+        client = get_item_with_filter(Client, Client.id, id)
         if orders is None:
-            return ("There's no orders yet"), 400
+            return "There's no orders yet", 400
+        if client is None:
+            return "Wrong client id", 400
         result = orders_schema.dump(orders)
         return result, 200
 
