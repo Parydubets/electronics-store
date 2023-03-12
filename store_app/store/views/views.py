@@ -73,7 +73,7 @@ def delete_client(id):
     """ Delete confirm page """
     form = DeleteItem()
     if form.cancel.data:
-        return redirect('/orders')
+        return redirect('/clients')
     else:
         if form.validate_on_submit():
             client = get_item_with_filter(Client, Client.id, id)
