@@ -8,6 +8,7 @@ services:
   
 env: 
   - FLASK_APP="store", DB_USER="root", DB_PASSWORD="", DB_HOST="127.0.0.1:3306"
+
    
 install: 
   - mysql -e 'CREATE DATABASE store;'
