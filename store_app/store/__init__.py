@@ -3,7 +3,7 @@ import os
 import sys
 import logging
 import logging.handlers
-from flask import Flask, render_template
+from flask import Flask, render_template, abort
 from flask_migrate import Migrate
 from .views import bp
 from .rest import api_bp
@@ -17,8 +17,18 @@ def create_app(test_config=None):
     db_user = str(db_user) + ':'
     db_password = os.environ.get('DB_PASSWORD')
     db_host = os.environ.get('DB_HOST')
-    app = Flask(__name__, instance_relative_config=True)
 
+    app = Flask(__name__, instance_relative_config=True)
+    try:
+        if os.environ['DB_HOST']:
+            print("The value of", 'DB_HOST', " is ", os.environ['DB_HOST'])
+        if os.environ['DB_USER']:
+            print("The value of", 'DB_USER', " is ", os.environ['DB_USER'])
+        # Raise error if the variable is not set
+    except KeyError:
+        print('some environment variables are not set.')
+        # Terminate from the script
+        sys.exit(1)
     handler = logging.handlers.RotatingFileHandler('store.log', maxBytes=1024 * 1024)
     logging.getLogger('werkzeug').setLevel(logging.DEBUG)
     logging.getLogger('werkzeug').addHandler(handler)
