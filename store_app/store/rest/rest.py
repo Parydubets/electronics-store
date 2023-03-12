@@ -40,14 +40,33 @@ class ClientsList(Resource):
 class Clients(Resource):
     """ The Client manipulation class """
     def get(self, id):
-        """ Get client by id """
+        """
+        Get client by id
+
+        Form parameters:
+            id (int)
+
+        Returns:
+            Message, status code
+        """
         client = get_item_with_filter(Client, Client.id, id)
         if client is None:
             return "No client with this id", 400
         result = client_schema.dump(client)
         return jsonify(result)
     def put(self, id):
-        """ Edit client by id """
+        """
+         Edit client by id
+
+        Form parameters (optional):
+            first_name (str)
+            last_name (str)
+            phone (str, 13 characters long)
+            last_name (str)
+
+        Returns:
+            Message, status code
+         """
         client = get_item_with_filter(Client, Client.id, id)
         if client is None:
             return f"There's no client with id {id}", 400
@@ -55,16 +74,27 @@ class Clients(Resource):
             if item == 'first_name':
                 client.first_name = request.form['first_name']
             elif item == 'last_name':
-                client.first_name = request.form['last_name']
+                client.last_name = request.form['last_name']
             elif item == 'phone':
-                client.first_name = request.form['phone']
+                phone = request.form['phone']
+                if len(phone)>13 or len(phone)<13:
+                    return 'Invalid phone number', 400
+                client.phone = phone
             elif item == 'email':
-                client.first_name = request.form['email']
+                client.email = request.form['email']
         edit_item(client)
         result = client_schema.dump(client)
         return result, 200
     def delete(self, id):
-        """ Delete client by id """
+        """
+        Edit client by id
+
+        Form parameters:
+            id (int)
+
+        Returns:
+            Message, status code
+        """
         client = get_item_with_filter(Client, Client.id, id)
         if client is None:
             return f"There's no client with id {id}", 400
@@ -88,7 +118,19 @@ class OrdersList(Resource):
         return result, 200
 
     def post(self):
-        """ Create new order """
+        """
+        Create new order
+
+        Form parameters:
+            full_name (str)
+            phone (str, 13 characters long)
+            order (str)
+            address (str)
+            date (date, <yyyy-mm-dd> )
+
+        Returns:
+            Message, status code
+        """
         full_name = request.form['full_name']
         phone = request.form['phone']
         positions = request.form['order']
@@ -116,7 +158,6 @@ class OrdersList(Resource):
                     order.cost += buf.cost
                     order.products.append(buf)
                     buf.amount -= 1
-                    commit()
                 create_item(order)
                 return "Created successfully", 201
         else:
@@ -125,14 +166,34 @@ class OrdersList(Resource):
 class Orders(Resource):
     """ The orders manipulation class """
     def get(self, id):
-        """ Get client by id """
+        """
+        Get order by id
+
+        Form parameters:
+            id (int)
+
+        Returns:
+            Message, status code
+        """
         order = get_item_with_filter(Client, Client.id, id)
         if order is None:
             return "No order with this id", 400
         result = order_schema.dump(order)
         return jsonify(result)
     def put(self, id):
-        """ Edit client by id """
+        """
+        Edit order by id
+
+        Form parameters (optional):
+            full_name (str)
+            phone (str, 13 characters long)
+            order (str)
+            address (str)
+            date (date, <yyyy-mm-dd> )
+
+        Returns:
+            Message, status code
+        """
         order = get_item_with_filter(Order, Order.id, id)
         if order is None:
             return f"There's no product with id {id}", 400
@@ -175,7 +236,15 @@ class Orders(Resource):
         return f"Deleted  order with id={id}", 200
 
 class ClientsOrders(Resource):
-    """ Get client`s orders """
+    """
+    Get client`s orders by id
+
+    Form parameters:
+        id (int)
+
+    Returns:
+        Message, status code
+    """
     def get(self, id):
         orders = get_items_with_filter(Order, Order.user_id, id)
         if orders is None:
@@ -185,15 +254,28 @@ class ClientsOrders(Resource):
 
 class ProductsList(Resource):
     """ The products list manipulation class """
+
     def get(self):
-        """ Get all clients """
+        """ Get all products """
         products = get_products_list(False)
         if products == None:
             return "There`s no orders yet", 400
         result = products_schema.dump(products)
         return result, 200
     def post (self):
-        """ Create new product """
+        """
+        Create new product
+
+        Form parameters:
+            name (str)
+            category (str)
+            year (int)
+            cost (int)
+            amount (int)
+
+        Returns:
+            Message, status code
+        """
         name = request.form['name']
         category = request.form['category']
         year = request.form['year']
@@ -208,14 +290,34 @@ class ProductsList(Resource):
 class Products(Resource):
     """ The products manipulation class """
     def get(self, id):
-        """ Get product by id """
+        """
+        Get product by id
+
+        Form parameters:
+            id (int)
+
+        Returns:
+            Message, status code
+        """
         product = get_item_with_filter(Product, Product.id, id)
         if product is None:
             return "No product with this id", 400
         result = product_schema.dump(product)
         return jsonify(result)
     def put(self, id):
-        """ Edit product by id """
+        """
+        Edit product by id
+
+        Form parameters (optional):
+            name (str)
+            category (str)
+            year (int)
+            cost (int)
+            amount (int)
+
+        Returns:
+            Message, status code
+        """
         product = get_item_with_filter(Product, Product.id, id)
         if product is None:
             return f"There's no product with this data", 400

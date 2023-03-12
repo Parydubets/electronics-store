@@ -14,7 +14,6 @@ def clients():
     form = Filters()
     date_from = request.args.get('date_from')
     date_to = request.args.get('date_to')
-    print(sum_of_orders())
     if date_from is not None and date_to is not None:
         data = get_clients_list(True, date_from=date_from, date_to=date_to)
         if data == []:
