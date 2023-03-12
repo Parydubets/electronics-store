@@ -2,16 +2,18 @@
 {% block content %}
 
         <div class="row">
-            <div class="filter">
-                <form>
+                <form name="Filter", class="filter-form">
+                    <div class="filter">
                     <label id="filter_by">Filter by date</label>
-                    <div><label for="from">from:</label>
-                    <input type="date" id="from" name="from"></div>
-                    <div><label for="to">to:</label>
-                    <input type="date" id="to" name="to"></div>
+                    <span>{{ form.date_from.label }}
+                        {{ form.date_from }}</span>
+                    <span>{{ form.date_to.label }}
+                    {{ form.date_to }}</span>
+                        </div>
+                    {{ form.refresh(class_="btn refresh-btn") }}
+
                 </form>
-                <a class="btn refresh-btn">Refresh</a>
-            </div>
+
         </div>
         <div class="list">
             <table class="table">
@@ -27,34 +29,28 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for i in range(0, len) %}
                     <tr>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>Smartphone Q2, Laptop SM234</td>
-                        <td>30/01/2023</td>
-                        <td>250</td>
-                        <td>20 Ingram Street, NY, NY, USA</td>
-                        <td class="edit-row"><a href="#"><i class="fa-solid fa-trash-can"></i></a><a href="edit_order.html"><i class="fa-solid fa-gear"></i></a></td>
+                        <td>{{ data[i].id }}</td>
+                        {% if data[i].user_id==None %}
+                            <td> - </td>
+                        {% else %}
+                            <td>{{ data[i].user_id }}</td>
+                        {% endif %}
+                        {% if order[i]=="" %}
+                            <td class="deleted"> Deleted product </td>
+                        {% else %}
+                            <td>{{ order[i] }}</td>
+                        {% endif %}
+
+                        <td>{{ data[i].date }}</td>
+                        <td>{{ data[i].cost }}</td>
+                        <td>{{ data[i].address }}</td>
+                        <td class="edit-row"><a href="{{ url_for('bp.delete_order', id=data[i].id) }}"><i class="fa-solid fa-trash-can"></i></a>
+                            <a href="{{ url_for('bp.edit_order', id=data[i].id) }}"><i class="fa-solid fa-gear"></i></a></td>
 
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>2</td>
-                        <td>Smartphone BM3</td>
-                        <td>11/02/2023</td>
-                        <td>500</td>
-                        <td>15215 Thatcher Dr, Austin, Texas, USA</td>
-                        <td class="edit-row"><a href="#"><i class="fa-solid fa-trash-can"></i></a><a href="edit_order.html"><i class="fa-solid fa-gear"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>3</td>
-                        <td>Laptop SM234</td>
-                        <td>20/08/2023</td>
-                        <td>120</td>
-                        <td>1205 Haddox Ct, Cpllege Station, Texas. USA</td>
-                        <td class="edit-row"><a href="#"><i class="fa-solid fa-trash-can"></i></a><a href="edit_order.html"><i class="fa-solid fa-gear"></i></a></td>
-                    </tr>
+                   {% endfor %}
 
                 </tbody>
             </table>

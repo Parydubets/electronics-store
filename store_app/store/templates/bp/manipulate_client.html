@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block content %}
+
+            <div class="center">
+                <form class="edit-form" name="Create client" method="post" novalidate>
+                    {{ form.hidden_tag() }}
+                    <div class="block">
+                        {{ form.first_name.label }}
+                        {{ form.first_name}}
+                        {% for error in form.first_name.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="block">
+                        {{ form.last_name.label }}
+                        {{ form.last_name }}
+                        {% for error in form.last_name.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="block">
+                        {{ form.email.label }}
+                        {{ form.email }}
+                        {% for error in form.email.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="block">
+                        {{ form.phone.label }}
+                        {{ form.phone }}
+                        {% for error in form.phone.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="edit">
+                        {{ form.cancel( class_="cancel") }}
+                        {{ form.submit( class_="save" ) }}
+                    </div>
+            </form>
+        </div>
+
+
+</body>
+{% endblock %}

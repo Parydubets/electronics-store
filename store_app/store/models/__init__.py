@@ -1,1 +1,2 @@
-from .models import db, Client, Product, Order, order_product
+""" The models package init file """
+from .models import *

@@ -4,7 +4,10 @@ from setuptools import setup, find_packages
 import os
 
 
-os.system("export FLASK_APP=store")
+os.system("flask db upgrade")
+os.system("flask db migrate")
+os.system("flask db upgrade")
+os.system("flask seed")
 
 setup(
     name='store',
@@ -29,6 +32,15 @@ setup(
         "Flask-SQLAlchemy==3.0.3",
         "Flask-Migrate==4.0.4",
         "click==8.1.3",
-        "sqlalchemy_utils",
+        "marshmallow==3.19.0",
+        "marshmallow-sqlalchemy==0.29.0",
+        "flask-marshmallow==0.14.0",
+        "WTForms==3.0.1",
+        "Flask-WTF==1.1.1",
+        "email-validator==1.3.1",
+        "SQLAlchemy-Utils==0.40.0",
+        "flask_restful",
+        "pylint",
+        "grep",
     ],
 )
