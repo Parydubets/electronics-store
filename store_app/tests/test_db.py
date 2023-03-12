@@ -10,5 +10,3 @@ def test_db_cnnection():
     if db_password == '':
         db_user=db_user[0:-1]
     assert database_exists('mysql://{}{}@{}/store'.format(db_user,db_password,db_host))
-    #assert database_exists('mysql://root:admin@localhost:3306/store')
-    #assert database_exists('mysql://root@127.0.0.1:3306/store')

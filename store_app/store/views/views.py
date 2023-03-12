@@ -168,6 +168,7 @@ def edit_order(id):
     items = ', '.join(items)
     if order is None:
         flash("There's no product with id {}".format(id))
+        return redirect('/orders')
     else:
         form = CreateOrderForm(name=client.first_name+" "+client.last_name, phone=client.phone,\
                                order=items, address=order.address, date=order.date)
@@ -307,6 +308,9 @@ def delete_product(id):
 
 
 def validate_order(item, product):
+    if product is None:
+        flash("There's no product with data".format(id))
+        return False
     if item not in product.name:
         flash("No product with name {}".format(item))
         return False

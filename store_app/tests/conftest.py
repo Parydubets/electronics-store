@@ -8,8 +8,9 @@ def app():
     app = create_app({
         'TESTING': True,
     })
-
-    yield app
+    with app.app_context():
+        app.config['WTF_CSRF_ENABLED'] = False
+        yield app
 
 
 @pytest.fixture
