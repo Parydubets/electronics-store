@@ -357,7 +357,9 @@ class AllOrdersSum(Resource):
 class ClientOrdersSum(Resource):
     """ The sum of orders class """
     def get(self, id):
-        """ Get sum of all orders """
+        """ Get sum of client's all orders """
+        if sum_of_client_orders(id) is None:
+            return "No client with this id", 400
         return str(sum_of_client_orders(id)), 200
 
 

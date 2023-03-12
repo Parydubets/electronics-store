@@ -32,6 +32,18 @@ def test_post_clients(client):
                                                     'email': 'theironm1an@gmail.com', \
                                                     'date': '2023-01-30'})
     assert response.status_code == 400
+    response = client.post('/api/clients_list', data={'first_name': 'Tony', \
+                                                      'last_name': 'Stark', \
+                                                      'phone': '+12345', \
+                                                      'email': 'theironm1an@gmail.com', \
+                                                      'date': '2023-01-30'})
+    assert response.status_code == 400
+    response = client.post('/api/clients_list', data={'first_name': 'Tony', \
+                                                      'last_name': 'Stark', \
+                                                      'phone': '+1233452345656456345', \
+                                                      'email': 'theironm1an@gmail.com', \
+                                                      'date': '2023-01-30'})
+    assert response.status_code == 400
     
 
 
@@ -45,6 +57,8 @@ def test_edit_client(client):
     response = client.put('api/client/1', data={'first_name':'Mike', 'last_name':'Vasovski'})
     assert response.status_code == 200
     response = client.put('api/client/1', data={'phone': '1234567890123543'})
+    assert response.status_code == 400
+    response = client.put('api/client/1', data={'phone': '+123456123425'})
     assert response.status_code == 400
     response = client.put('api/client/1', data={'email': 'someone@gmail.com'})
     assert response.status_code == 200
@@ -94,10 +108,23 @@ def test_post_orders(client):
                                                     'date': '2023-01-30'})
     assert response.status_code == 400
     response = client.post('/api/orders_list', data={'full_name': 'Tony Stark', \
-                                                    'order': 'Smartphone Q2, Smartpgone Q2',\
+                                                    'order': 'Smartphone Q2, Smartphone Q2',\
                                                     'phone':'+123456123452', \
                                                     'address': '10501 Wrangler Way, Corona, CA 92883, USA', \
                                                     'date': '2023-01-30'})
+    assert response.status_code == 400
+    response = client.post('/api/orders_list', data={'full_name': 'Tony Stark', \
+                                                     'order': 'sdfvsdf', \
+                                                     'phone': '+123456123452', \
+                                                     'address': '10501 Wrangler Way, Corona, CA 92883, USA', \
+                                                     'date': '2023-01-30'})
+    assert response.status_code == 400
+    client.put('api/product/2', data={'amount': '0'})
+    response = client.post('/api/orders_list', data={'full_name': 'Tony Stark', \
+                                                     'order': 'Smartphone Q2, Laptop SM234', \
+                                                     'phone': '+123456123452', \
+                                                     'address': '10501 Wrangler Way, Corona, CA 92883, USA', \
+                                                     'date': '2023-01-30'})
     assert response.status_code == 400
 
 
@@ -112,6 +139,12 @@ def test_edit_order(client):
     response = client.put('api/order/1', data={'full_name':'Mike Stevenson'})
     assert response.status_code == 400
     response = client.put('api/order/1', data={'order': 'Smartphone Q2, Smartphone Q2'})
+    assert response.status_code == 400
+    response = client.put('api/order/1', data={'order': 'Smartphone Q2, Laptop SM234'})
+    assert response.status_code == 400
+    response = client.put('api/order/1', data={'order': 'Smartphone Q2, Laptop SM234, Laptop SM234'})
+    assert response.status_code == 400
+    response = client.put('api/order/1', data={'phone': '+123456123453'})
     assert response.status_code == 400
     response = client.put('api/order/1', data={'email': 'someone@gmail.com'})
     assert response.status_code == 400
@@ -135,6 +168,12 @@ def test_get_products(client):
     response = client.get('/api/products_list')
     assert response.status_code == 200
 
+def test_get_product(client):
+    response = client.get('/api/product/1')
+    assert response.status_code == 200
+    response = client.get('/api/product/999')
+    assert response.status_code == 200
+
 def test_post_products(client):
     response = client.post('/api/products_list', data={'name': 'Powerbank 10000 mAh', \
                                                      'year': '2020', \
@@ -153,7 +192,7 @@ def test_post_products(client):
 def test_edit_product(client):
     response = client.put('api/product/1', data={'name':'Pro Powerbank 10000 mAh'})
     assert response.status_code == 200
-    response = client.put('api/product/1', data={'Category': 'Pro Powerbanks'})
+    response = client.put('api/product/1', data={'category': 'Pro Powerbanks'})
     assert response.status_code == 200
     response = client.put('api/product/1', data={'price': '75'})
     assert response.status_code == 200
@@ -173,7 +212,21 @@ def test_delete_product(client):
     response = client.delete('api/product/999')
     assert response.status_code == 400
 
+def test_clients_orders(client):
+    response = client.get('api/orders_list/client/1')
+    assert response.status_code == 200
+    response = client.get('api/orders_list/client/999')
+    assert response.status_code == 400
 
+def test_get_sum(client):
+    response = client.get('/api/orders/sum')
+    assert response.status_code == 200
+
+def test_get_sum_by_client(client):
+    response = client.get('/api/client/1/sum')
+    assert response.status_code == 200
+    response = client.get('/api/client/999/sum')
+    assert response.status_code == 400
 
 def test_last_rest_test(client):
     os.environ['FLASK_APP']='store'
