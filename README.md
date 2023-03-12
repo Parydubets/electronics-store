@@ -72,20 +72,20 @@ This project have a branch of api available:
 
 
 - http://127.0.0.1:5000/api/orders_list
- GET request: Returns list of orders
+ GET request: Returns list of orders | 
  POST request: Creates new order on POST request
 - http://127.0.0.1:5000/api/order/<id>
-GET request: Returns order information by order id
-PUT request: Edits order by id
+GET request: Returns order information by order id | 
+PUT request: Edits order by id | 
 DELETE request: Deletes order by id
 
 
 - http://127.0.0.1:5000/api/products_list
- GET request: Returns list of products
+ GET request: Returns list of products | 
  POST request: Creates new product on POST request
 - http://127.0.0.1:5000/api/product/<id>
- GET request: Returns product information by product id
- PUT request: Edits product by id
+ GET request: Returns product information by product id | 
+ PUT request: Edits product by id | 
  DELETE request: Deletes product by id
 
 
