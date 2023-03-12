@@ -75,9 +75,9 @@ This project have a branch of api available:
  GET request: Returns list of orders
  POST request: Creates new order on POST request
 - http://127.0.0.1:5000/api/order/<id>
- GET request: Returns order information by order id
- PUT request: Edits order by id
- DELETE request: Deletes order by id
+GET request: Returns order information by order id
+PUT request: Edits order by id
+DELETE request: Deletes order by id
 
 
 - http://127.0.0.1:5000/api/products_list
