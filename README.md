@@ -62,37 +62,37 @@ The project will be accesseble on http://127.0.0.1:8000/
 ## API
 
 This project have a branch of api available:
-- http://127.0.0.1:5000/api/clients_list __
- GET request: Returns list of clients
+- http://127.0.0.1:5000/api/clients_list <br>
+ GET request: Returns list of clients <br>
  POST request: Creates new client on POST request
-- http://127.0.0.1:5000/api/client/<id>__
- GET request: Returns client's information by client id
- PUT request: Edits client by id
+- http://127.0.0.1:5000/api/client/<id> <br>
+ GET request: Returns client's information by client id <br>
+ PUT request: Edits client by id <br>
  DELETE request: Deletes client by id
 
 
-- http://127.0.0.1:5000/api/orders_list __
- GET request: Returns list of orders__
+- http://127.0.0.1:5000/api/orders_list <br>
+ GET request: Returns list of orders <br>
  POST request: Creates new order on POST request
-- http://127.0.0.1:5000/api/order/<id> __
-GET request: Returns order information by order id__
-PUT request: Edits order by id__
+- http://127.0.0.1:5000/api/order/<id> <br>
+GET request: Returns order information by order id <br>
+PUT request: Edits order by id <br>
 DELETE request: Deletes order by id
 
 
-- http://127.0.0.1:5000/api/products_list __
- GET request: Returns list of products__
+- http://127.0.0.1:5000/api/products_list <br>
+ GET request: Returns list of products <br>
  POST request: Creates new product on POST request
-- http://127.0.0.1:5000/api/product/<id>
- GET request: Returns product information by product id__
- PUT request: Edits product by id__
+- http://127.0.0.1:5000/api/product/<id> <br>
+ GET request: Returns product information by product id <br>
+ PUT request: Edits product by id <br>
  DELETE request: Deletes product by id
 
 
-- http://127.0.0.1:5000/api/orders_list/client/<id> __
+- http://127.0.0.1:5000/api/orders_list/client/<id> <br>
  GET request: Returns list of orders by client`s id
-- http://127.0.0.1:5000/api/orders/sum __
+- http://127.0.0.1:5000/api/orders/sum <br>
  GET request: Returns sum of all saved orders
-- http://127.0.0.1:5000/api/client/<id>/sum __
+- http://127.0.0.1:5000/api/client/<id>/sum <br>
  GET request: Returns sum of all orders by client id
 
