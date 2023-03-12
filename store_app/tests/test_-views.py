@@ -19,12 +19,36 @@ def test_clients_route(client):
 def test_new_client_route(client):
     response = client.get('/new_client')
     assert response.status_code == 200
+    response = client.post('/new_client', data={'cancel': True})
+    assert response.status_code == 302
+    response = client.post('/new_client', data={'submit': True, 'first_name':'Harry',\
+                                                'last_name':'Potter',\
+                                                'email':'harrypotter@hmail.com',\
+                                                'phone':'+445332445678'})
+    assert response.status_code == 302
+    response = client.post('/new_client', data={'submit': True, 'first_name': 'Harry', \
+                                                'last_name': 'Potter', \
+                                                'email': 'harrypotter@hmail.com', \
+                                                'phone': '+445332445674'})
+    assert response.status_code == 200
+    response = client.post('/new_client', data={'submit': True, 'first_name': 'Harry', \
+                                                'last_name': 'Potter', \
+                                                'email': 'harrypotter@gmail.com', \
+                                                'phone': '+445332445678'})
+    assert response.status_code == 200
 
 
 def test_edit_client_route(client):
     response = client.get('/edit_client')
     assert response.status_code == 404
     response = client.get('/edit_client/1')
+    assert response.status_code == 200
+    response = client.get('/edit_client/1', data={'cancel':True})
+    assert response.status_code == 200
+    response = client.get('/edit_client/1', data={'submit': True, 'first_name': 'Harry', \
+                                                'last_name': 'Potter', \
+                                                'email': 'harrypotter@gmail.com', \
+                                                'phone': '+445332445678'})
     assert response.status_code == 200
     response = client.get(('/edit_client/999'), follow_redirects=True)
     assert response.request.path == '/clients'
