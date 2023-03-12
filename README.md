@@ -96,3 +96,7 @@ DELETE request: Deletes order by id
 - http://127.0.0.1:5000/api/client/<id>/sum <br>
  GET request: Returns sum of all orders by client id
 
+
+## Attention
+Tests for this application are written with pytest
+For more deep testing everytime tests package is running, it recreates database
