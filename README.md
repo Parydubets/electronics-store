@@ -63,36 +63,36 @@ The project will be accesseble on http://127.0.0.1:8000/
 
 This project have a branch of api available:
 - http://127.0.0.1:5000/api/clients_list
-GET request: Returns list of clients
-POST request: Creates new client on POST request
+ GET request: Returns list of clients
+ POST request: Creates new client on POST request
 - http://127.0.0.1:5000/api/client/<id>
-GET request: Returns client's information by client id
-PUT request: Edits client by id
-DELETE request: Deletes client by id
+ GET request: Returns client's information by client id
+ PUT request: Edits client by id
+ DELETE request: Deletes client by id
 
 
 - http://127.0.0.1:5000/api/orders_list
-GET request: Returns list of orders
-POST request: Creates new order on POST request
+ GET request: Returns list of orders
+ POST request: Creates new order on POST request
 - http://127.0.0.1:5000/api/order/<id>
-GET request: Returns order information by order id
-PUT request: Edits order by id
-DELETE request: Deletes order by id
+ GET request: Returns order information by order id
+ PUT request: Edits order by id
+ DELETE request: Deletes order by id
 
 
 - http://127.0.0.1:5000/api/products_list
-GET request: Returns list of products
-POST request: Creates new product on POST request
+ GET request: Returns list of products
+ POST request: Creates new product on POST request
 - http://127.0.0.1:5000/api/product/<id>
-GET request: Returns product information by product id
-PUT request: Edits product by id
-DELETE request: Deletes product by id
+ GET request: Returns product information by product id
+ PUT request: Edits product by id
+ DELETE request: Deletes product by id
 
 
 - http://127.0.0.1:5000/api/orders_list/client/<id>
-GET request: Returns list of orders by client`s id
+ GET request: Returns list of orders by client`s id
 - http://127.0.0.1:5000/api/orders/sum
-GET request: Returns sum of all saved orders
+ GET request: Returns sum of all saved orders
 - http://127.0.0.1:5000/api/client/<id>/sum
-GET request: Returns sum of all orders by client id
+ GET request: Returns sum of all orders by client id
 
