@@ -10,7 +10,7 @@ Additional information and functionality will be added further.
 Build success by Travis-CI
 [![Build Status](https://app.travis-ci.com/Parydubets/electronics-store.svg?branch=main)](https://app.travis-ci.com/Parydubets/electronics-store)
 Coverage by coveralls
-[![Coverage Status](https://coveralls.io/repos/github/Parydubets/electronics-store/badge.svg?branch=main)](https://coveralls.io/github/Parydubets/electronics-store?branch=main)
+
 
 Electronics-store is flask app for electronics store managers. It allows to manipulate orders. clients and products 
 
