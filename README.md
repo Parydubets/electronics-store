@@ -59,6 +59,10 @@ gunicorn -w <number_of_workers> 'store:create_app()'
 In electronics-store/store_app folder
 The project will be accesseble on http://127.0.0.1:8000/
 
+
+## Running with gunicorn
+To run tests with pytest you should set environment variables just like you set for running with gunicorn
+
 ## API
 
 This project have a branch of api available:
