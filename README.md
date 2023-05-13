@@ -38,6 +38,7 @@ git clone https://github.com/Parydubets/electronics-store.git
 ```
 Then set environment variables in electronics-store/store_app/install.py and run command:
 ```sh
+pip install .
 python install.py
 ```
 The script will create database if it doesn't exist and run the app
