@@ -36,9 +36,8 @@ To run application on itself localy  you should clone it from repo with
 ```sh
 git clone https://github.com/Parydubets/electronics-store.git
 ```
-Then set environment variables in electronics-store/store_app/install.py and run command:
+Then set environment variables in electronics-store/store_app/install.py, open the .\electronics-store\store_app\ folder and run command:
 ```sh
-cd .\electronics-store\store_app\ 
 pip install .
 python install.py
 ```
